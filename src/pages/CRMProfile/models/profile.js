@@ -1,7 +1,7 @@
 import { queryBasicProfile, queryAdvancedProfile } from '@/services/api';
 
 export default {
-  namespace: 'profile',
+  namespace: 'CRMprofile',
 
   state: {
     basicGoods: [],

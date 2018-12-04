@@ -1,7 +1,7 @@
 import { queryActivities } from '@/services/api';
 
 export default {
-  namespace: 'activities',
+  namespace: 'CRMactivities',
 
   state: {
     list: [],

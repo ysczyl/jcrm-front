@@ -1,7 +1,7 @@
 import queryError from '@/services/error';
 
 export default {
-  namespace: 'error',
+  namespace: 'CRMerror',
 
   state: {
     error: '',

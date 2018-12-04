@@ -20,8 +20,8 @@ const TopSearch = React.lazy(() => import('./TopSearch'));
 const ProportionSales = React.lazy(() => import('./ProportionSales'));
 const OfflineData = React.lazy(() => import('./OfflineData'));
 
-@connect(({ chart, loading }) => ({
-  chart,
+@connect(({ CRMchart, loading }) => ({
+  CRMchart,
   loading: loading.effects['chart/fetch'],
 }))
 class Analysis extends Component {
@@ -100,7 +100,7 @@ class Analysis extends Component {
 
   render() {
     const { rangePickerValue, salesType, currentTabKey } = this.state;
-    const { chart, loading } = this.props;
+    const { CRMchart, loading } = this.props;
     const {
       visitData,
       visitData2,
@@ -111,7 +111,7 @@ class Analysis extends Component {
       salesTypeData,
       salesTypeDataOnline,
       salesTypeDataOffline,
-    } = chart;
+    } = CRMchart;
     let salesPieData;
     if (salesType === 'all') {
       salesPieData = salesTypeData;

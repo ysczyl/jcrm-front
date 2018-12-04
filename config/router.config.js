@@ -42,7 +42,7 @@ export default [
         name: '客户',
         component: './CRMForms/form',
       },
-      { path: '/form/advanced-form', component: './Forms/BasicForm' },
+      { path: '/form/advanced-form', component: './CRMForms/BasicForm' },
       // 联系人
       {
         path: '/list/table-list',
@@ -50,14 +50,14 @@ export default [
         name: '联系人',
         component: './CRMList/TableList',
       },
-      { path: '/list/basic-list', component: './List/BasicList' },
+      { path: '/list/basic-list', component: './CRMList/BasicList' },
       {
         path: '/profile/basic',
         name: '潜在用户',
         icon: 'profile',
         component: './CRMProfile/BasicProfile',
       },
-      { path: '/profile/advanced', component: './Profile/AdvancedProfile' },
+      { path: '/profile/advanced', component: './CRMProfile/AdvancedProfile' },
       {
         name: '业务机会',
         icon: 'check-circle-o',
@@ -65,7 +65,7 @@ export default [
         component: './CRMResult/Success',
         },
           // 业务机会
-          { path: '/result/fail', component: './Result/Error' },
+          { path: '/result/fail', component: './CRMResult/Error' },
       {
         name: '任务',
         icon: 'warning',
@@ -130,11 +130,11 @@ export default [
           },
         ],
       },
-      // {
-      //   name: '竞争对手',
-      //   icon: 'warning',
-      //   path: '/exception',
-      // },
+      {
+        name: '竞争对手',
+        icon: 'warning',
+        path: '/exception',
+      },
 
 
 
