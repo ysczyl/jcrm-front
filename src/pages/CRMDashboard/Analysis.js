@@ -13,7 +13,7 @@ const Curved = React.lazy(() => import('./Curved'));
 const Lately = React.lazy(() => import('./Lately'));
 const Deal = React.lazy(() => import('./Deal'));
 const TodayEvent = React.lazy(() => import('./TodayEvent'));
-const Assistant = React.lazy(() => import('./assistant'));
+const Assistant = React.lazy(() => import('./Assistant'));
 const AllWork = React.lazy(() => import('./AllWork'));
 const SalesCard = React.lazy(() => import('./SalesCard'));
 const TopSearch = React.lazy(() => import('./TopSearch'));
