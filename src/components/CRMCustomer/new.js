@@ -20,15 +20,16 @@ class New extends React.Component {
   }
 
   handleOk = (e) => {
-  		const values = {
-    "consumerName": "ysc",
-    "contactName": "22222",
-    "department": "1111",
-    "email": "1239864102@qq.com",
-    "familyName": "qqq",
-    "firstName": "11",
-    "telephone": "ysc",
-  }
+  	const values = {
+	    "consumerName": "ysc",
+	    "contactName": "22222",
+	    "department": "1111",
+	    "email": "1239864102@qq.com",
+	    "familyName": "qqq",
+	    "firstName": "11",
+	    "telephone": "ysc",
+    }
+    console.log(e);
     console.log(e);
     this.setState({
       visible: false,
@@ -39,8 +40,7 @@ class New extends React.Component {
           dispatch({
         type: 'consumer/submit',
         payload: {
-          ...values,
-          // type,
+          values,
         },
       });
 

@@ -4,10 +4,10 @@ export default async function bindEnterprise(params) {
   const token = sessionStorage.getItem('token')
   return request(`/api/enterprise`, {
       method: 'POST',
+      headers: {'Authorization': `Bearer ${token}`},
       body: {
         ...params,
         method: 'post',
-        headers: {'Authorization': `Bearer ${token}`}
       }
   });
 }
