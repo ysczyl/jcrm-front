@@ -1,0 +1,361 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~@/utils/utils.less';
+
+.iconGroup {
+  i {
+    transition: color 0.32s;
+    color: @text-color-secondary;
+    cursor: pointer;
+    margin-left: 16px;
+    &:hover {
+      color: @text-color;
+    }
+  }
+}
+
+.rankingList {
+  margin: 25px 0 0;
+  padding: 0;
+  list-style: none;
+  li {
+    .clearfix();
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    span {
+      color: @text-color;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .rankingItemNumber {
+      background-color: @background-color-base;
+      border-radius: 20px;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 16px;
+      height: 20px;
+      line-height: 20px;
+      width: 20px;
+      text-align: center;
+      margin-top: 1.5px;
+      &.active {
+        background-color: #314659;
+        color: #fff;
+      }
+    }
+    .rankingItemTitle {
+      flex: 1;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin-right: 8px;
+    }
+  }
+}
+
+.salesExtra {
+  display: inline-block;
+  margin-right: 24px;
+  a {
+    color: @text-color;
+    margin-left: 24px;
+    &:hover {
+      color: @primary-color;
+    }
+    &.currentDate {
+      color: @primary-color;
+    }
+  }
+}
+
+.salesCard {
+  .salesBar {
+    padding: 0 0 32px 32px;
+  }
+  .salesRank {
+    padding: 0 32px 32px 72px;
+  }
+  :global {
+    .ant-tabs-bar {
+      padding-left: 16px;
+      .ant-tabs-nav .ant-tabs-tab {
+        padding-top: 16px;
+        padding-bottom: 14px;
+        line-height: 24px;
+      }
+    }
+    .ant-tabs-extra-content {
+      padding-right: 24px;
+      line-height: 55px;
+    }
+    .ant-card-head {
+      position: relative;
+    }
+    .ant-card-head-title {
+      align-items: normal;
+    }
+  }
+}
+
+.salesCardExtra {
+  height: inherit;
+}
+
+.salesTypeRadio {
+  position: absolute;
+  right: 54px;
+  bottom: 12px;
+}
+
+.offlineCard {
+  :global {
+    .ant-tabs-ink-bar {
+      bottom: auto;
+    }
+    .ant-tabs-bar {
+      border-bottom: none;
+    }
+    .ant-tabs-nav-container-scrolling {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+    .ant-tabs-tab-prev-icon:before {
+      position: relative;
+      left: 6px;
+    }
+    .ant-tabs-tab-next-icon:before {
+      position: relative;
+      right: 6px;
+    }
+    .ant-tabs-tab-active h4 {
+      color: @primary-color;
+    }
+  }
+}
+
+.trendText {
+  margin-left: 8px;
+  color: @heading-color;
+}
+
+@media screen and (max-width: @screen-lg) {
+  .salesExtra {
+    display: none;
+  }
+
+  .rankingList {
+    li {
+      span:first-child {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .rankingTitle {
+    margin-top: 16px;
+  }
+
+  .salesCard .salesBar {
+    padding: 16px;
+  }
+}
+
+@media screen and (max-width: @screen-sm) {
+  .salesExtraWrap {
+    display: none;
+  }
+
+  .salesCard {
+    :global {
+      .ant-tabs-content {
+        padding-top: 30px;
+      }
+    }
+  }
+}
+.BoxLeft{
+  width: 31.5%;
+  float: left;
+}
+.BoxRight{
+  width: 31.5%;
+  float: left;
+  margin-left: 2%;
+}
+/*业绩*/
+.QuarterlyResults{
+  position: relative;
+  width: 65%;
+  background:white;
+  border-radius: 5px;
+  height: 400px;
+}
+.jySpan{
+  font-size:15px;
+  margin-left: 20px;
+}
+.count{
+  margin-left: 100px;
+  font-size: 12px;
+}
+/*助手*/
+.assistant{
+  width: 33%;
+  right: 0;
+  float: right;
+  background-color: white;
+  border-radius: 5px;
+  border:none;
+  margin-top: -400px;
+}
+.assistantSpan{
+  font-size: 15px;
+  margin-left: 12px;
+}
+.assistantPanel{
+  border-radius: 0px;
+}
+
+
+/*今日事件*/
+.TodayEvent{
+  position: relative;
+  background-color: white;
+  width: 100%;
+  min-height: 240px;
+  overflow: hidden;
+  border-radius: 5px;
+  left: 0px;
+  margin-left: 0px;
+  margin-top: 20px;
+  margin-bottom:0px;
+}
+.EventsBOX{
+  position: relative;
+  width: 100%;
+  min-height: 190px;
+  overflow: hidden;
+}
+.TodayEvent strong{
+  font-size: 15px;
+  margin-left: 12px;
+}
+.TodayEventTime{
+  position: relative;
+  font-size: 12px;
+  width: 50px;
+  height: 72px;
+  left: 24px;
+  margin-top: 0px;
+}
+.TodayEventTheme{
+  position: absolute;
+  font-size: 12px;
+  left: 74px;
+  color: rgb(0, 109, 204);
+}
+.TodayEventContent,.TodayEventEnd{
+  position: absolute;
+  font-size: 12px;
+  left: 74px;
+}
+.TodayEventhr{
+  height: 1px;
+  width: 100%;
+  background-color: black;
+}
+.TodayEventRL{
+  color: rgb(0, 109, 204);
+  text-align: center;
+  width: 100%;
+  font-size: 13px;
+  line-height: 17px;
+  margin: 0 auto;
+  margin-left: 47%;
+}
+/*全部任务*/
+.AllWork{
+  position:relative;
+  width: 100%;
+  min-height: 200px;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+.allWorkTheme{
+  font-size: 15px;
+}
+.allWorkTime{
+  font-size: 15px;
+  float: right;
+}
+.allWorkName{
+  font-size: 15px;
+}
+.allWorkAll{
+  color: rgb(0, 109, 204);
+  text-align: center;
+  width: 100%;
+  font-size: 13px;
+  line-height: 17px;
+  margin: 0 auto;
+  margin-left: 46%;
+}
+.allWorkJSON{
+  width: 92%;
+  margin-top: 35px;
+  margin-left: 5%;
+}
+
+/*最近记录*/
+.lately{
+  width: 100%;
+  background-color: white;
+  margin-left: 0px;
+  border-radius: 5px;
+  margin-top: 20px;
+  min-height: 200px;
+}
+.latelySpan{
+  font-size: 15px;
+  margin-left: 12px;
+}
+
+
+/*重要交易 -最近业务机会*/
+.deal{
+  width: 100%;
+  min-height: 200px;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+.dealTheme{
+  font-size: 15px;
+}
+.dealTime{
+  font-size: 15px;
+  float: right;
+}
+.dealName{
+  font-size: 15px;
+}
+.dealAll{
+  color: rgb(0, 109, 204);
+  text-align: center;
+  width: 100%;
+  font-size: 13px;
+  line-height: 17px;
+  margin: 0 auto;
+  margin-left: 46%;
+}
+.dealJSON{
+  width: 92%;
+  margin-top: 35px;
+  margin-left: 5%;
+}
