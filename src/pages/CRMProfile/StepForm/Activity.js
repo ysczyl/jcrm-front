@@ -1,11 +1,11 @@
 import React, { PureComponent} from 'react';
 import { Tabs, Icon } from 'antd';
 import styles from './style.less';
-import Tabss from '@/components/CRMPotential/Activity/tabs.js';
-import Tabsss from '@/components/CRMPotential/Chatter/tabs.js';
-import ShareContent from '@/components/CRMPotential/Chatter/shareContent.js';
-import XQ1 from '@/components/CRMPotential/xiangxi1.js';
-import XQ2 from '@/components/CRMPotential/xiangxi2.js';
+import Tabss from '@/components/CRMPotential/Activity/Tabs';
+import Tabsss from '@/components/CRMPotential/Chatter/Tabs';
+import ShareContent from '@/components/CRMPotential/Chatter/ShareContent';
+import XQ1 from '@/components/CRMPotential/Xiangxi1';
+import XQ2 from '@/components/CRMPotential/Xiangxi2';
 
 const TabPane = Tabs.TabPane;
 const Relevant = React.lazy(() => import('./Relevant'));

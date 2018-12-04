@@ -1,12 +1,12 @@
 import { Tabs } from 'antd';
 import React, { PureComponent ,Component, Suspense} from 'react';
 import styles from './style.less';
-import Unqualified from '@/components/CRMbusiness/state/Unqualified.js';
-import SuccessGuide from '@/components/CRMbusiness/state/SuccessGuide.js';
-import New from '@/components/CRMbusiness/state/New.js';
-import Working from '@/components/CRMbusiness/state/Working.js';
-import Nurturing from '@/components/CRMbusiness/state/Nurturing.js';
-import Close from '@/components/CRMbusiness/state/Close.js';
+import Unqualified from '@/components/CRMbusiness/state/Unqualified';
+import SuccessGuide from '@/components/CRMbusiness/state/SuccessGuide';
+import New from '@/components/CRMbusiness/state/New';
+import Working from '@/components/CRMbusiness/state/Working';
+import Nurturing from '@/components/CRMbusiness/state/Nurturing';
+import Close from '@/components/CRMbusiness/state/Close';
 const TabPane = Tabs.TabPane;
 class StepBoxs extends PureComponent {
 

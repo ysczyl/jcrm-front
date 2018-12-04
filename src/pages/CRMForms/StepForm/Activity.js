@@ -1,9 +1,9 @@
 import React, { PureComponent} from 'react';
 import { Tabs, Icon } from 'antd';
 import styles from './style.less';
-import Tabss from '@/components/CRMCustomer/Activity/tabs.js';
-import Tabsss from '@/components/CRMCustomer/Chatter/tabs.js';
-import ShareContent from '@/components/CRMCustomer/Chatter/shareContent.js';
+import Tabss from '@/components/CRMCustomer/Activity/Tabs';
+import Tabsss from '@/components/CRMCustomer/Chatter/Tabs';
+import ShareContent from '@/components/CRMCustomer/Chatter/ShareContent';
 
 const TabPane = Tabs.TabPane;
 const Relevant = React.lazy(() => import('./Relevant'));

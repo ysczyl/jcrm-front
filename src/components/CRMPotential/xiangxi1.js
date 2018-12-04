@@ -61,7 +61,7 @@ var json = {
     ]
 }
 
-class XQ1 extends React.Component {
+class Xiangxi1 extends React.Component {
   render() {
         let lis = json.chanceName.map((item,index)=>
             	<li className={styles.Li} key={index}>
@@ -80,4 +80,4 @@ class XQ1 extends React.Component {
   }
 }
 
-export default XQ1;
+export default Xiangxi1;

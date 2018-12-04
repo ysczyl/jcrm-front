@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Analysis.less';
-import LatelyNews from '@/components/CRMTask/LatelyNews.js';
+import LatelyNews from '@/components/CRMTask/LatelyNews';
 
 class Lately extends React.Component {
   render() {

@@ -1,8 +1,8 @@
 import React, { PureComponent} from 'react';
 import { Tabs, Icon } from 'antd';
 import styles from './style.less';
-import XQ1 from '@/components/CRMbusiness/xiangxi1.js';
-import XQ2 from '@/components/CRMbusiness/xiangxi2.js';
+import XQ1 from '@/components/CRMbusiness/Xiangxi1';
+import XQ2 from '@/components/CRMbusiness/Xiangxi2';
 
 const TabPane = Tabs.TabPane;
 const Relevant = React.lazy(() => import('./Relevant'));

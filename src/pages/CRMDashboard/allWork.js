@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Analysis.less';
-import WorkSelect from '@/components/CRMTask/workSelect.js';
+import WorkSelect from '@/components/CRMTask/WorkSelect';
 import {Input} from 'antd';
 const jsons = {
   "Event": [{

@@ -2,7 +2,7 @@ import React from "react";
 import styles from './style.less';
 import { Table, Divider, Tag,Button } from 'antd';
 import Link from 'umi/link';
-import New from '@/components/CRMCustomer/new.js';
+import New from '@/components/CRMCustomer/New';
 
 const ButtonGroup = Button.Group;
 const columns = [{

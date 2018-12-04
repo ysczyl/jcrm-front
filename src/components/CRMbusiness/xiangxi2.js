@@ -62,7 +62,7 @@ const text = `
   Known for its loyalty and faithfulness,
   it can be found as a welcome guest in many households across the world.
 `;
-class XQ2 extends React.Component {
+class Xangxi2 extends React.Component {
   render() {
         let Panels = json.chanceName.map((item,index)=>
             	<Panel className={styles.panel} header={item.chanceName} key={index}>
@@ -80,4 +80,4 @@ class XQ2 extends React.Component {
   }
 }
 
-export default XQ2;
+export default Xangxi2;

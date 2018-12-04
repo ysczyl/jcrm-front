@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Analysis.less';
-import DealSelect from '@/components/CRMTask/DealSelect.js';
+import DealSelect from '@/components/CRMTask/DealSelect';
 import {Input} from 'antd';
 import Link from 'umi/link';
 const jsons = {

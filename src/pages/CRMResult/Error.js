@@ -1,7 +1,7 @@
 import React, { PureComponent ,Component, Suspense} from 'react';
 import { connect } from 'dva';
 import PageLoading from '@/components/PageLoading';
-import Uploads from '@/components/CRMbusiness/Upload/upload.js';
+import Uploads from '@/components/CRMbusiness/Upload/Upload';
 import { formatMessage, FormattedMessage } from 'umi/locale';
 import Affixs from './Affixs/index.js';
 import {

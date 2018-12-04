@@ -5,7 +5,7 @@ const Option = Select.Option;
 function handleChange(value) {
   console.log(`selected ${value}`);
 }
-class workSelect extends React.Component {
+class WorkSelect extends React.Component {
   render() {
     return (
       <div>
@@ -21,4 +21,4 @@ class workSelect extends React.Component {
   }
 }
 
-export default workSelect;
+export default WorkSelect;

@@ -2,7 +2,7 @@ import React, { PureComponent ,Component, Suspense} from 'react';
 import { connect } from 'dva';
 import PageLoading from '@/components/PageLoading';
 import { formatMessage, FormattedMessage } from 'umi/locale';
-import TopAffix from './topAffix/index.js';
+import TopAffix from './topAffix/Affixs';
 import {
   Form,
   Input,
