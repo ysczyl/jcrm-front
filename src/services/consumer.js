@@ -1,5 +1,4 @@
 import request from '@/utils/request';
-
 export async function seach() {
   const token = sessionStorage.getItem('token');
   return request('/server/api/consumer/detailed', {
@@ -16,11 +15,8 @@ export async function customerList(params) {
 
 export async function customerSearch(params) {
   const token = sessionStorage.getItem('token');
-  return request('/server/api/consumer/detailed', {
+  return request('/server/api/consumer/detailed?cid='+params.cid, {
     headers: {   Authorization: `Bearer ${token}` ,method: 'GET' },
-      body: {
-        "cid":11
-      },
   });
 }
 

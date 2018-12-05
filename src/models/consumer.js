@@ -7,6 +7,7 @@ export default {
     list:[],
     customerSearch:[],
   },
+  
   effects: {
     *submit({ payload }, { call, put }) {
       const response = yield call(add, payload);
@@ -40,11 +41,14 @@ export default {
     //客户详细信息
       *customerSearch({ payload }, { call, put }) {
       const response = yield call(customerSearch, payload);
-      customerSearch=response;
+      if (response) {
         yield put({
           type: 'showSearch',
           payload: response,
         });
+      }else{
+        
+      }
     },
 
   },
@@ -56,8 +60,9 @@ export default {
     },
 
     showSearch(state,action){
+      console.log(action.payload.data)
       return{
-        customerSearch:action.payload,
+        customerSearch:action.payload.data,
       };
     },
   },

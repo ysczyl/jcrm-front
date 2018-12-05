@@ -8,18 +8,31 @@ const ButtonGroup = Button.Group;
   projectLoading: loading.effects['consumer/customerSearch'],
 }))
 class Affixs extends React.Component {
-    state = {
-    top: 0,
-    bottom: 10,
-  }
-    componentDidMount(){
-      console.log(this.props.cid)
-      const { dispatch } = this.props;
-        dispatch({
-        type: 'consumer/customerSearch',
-        cid: this.props.cid,
-      });
-        console.log(this.props)
+  constructor(props) {
+    super(props)
+    this.state = {
+      top: 0,
+      bottom: 10,
+      list:[],
+      cid:this.props.cid,
+};
+}
+
+  customerSearch=(e)=> {
+    const { dispatch } = this.props;
+    dispatch({
+    type: 'consumer/customerSearch',
+    payload: {cid:this.state.cid,}
+  });
+}
+  componentDidMount(){
+    this.customerSearch();
+    console.log(this.props)
+}
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      list: nextProps.consumer.list,
+  });
   }
   render() {
     return (
