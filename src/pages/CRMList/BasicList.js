@@ -43,6 +43,7 @@ class BasicList extends PureComponent {
       },
       () => {
         console.log(this.state.name); //setState是异步操作，但是我们可以在它的回调函数里面进行操作
+        console.log('代码检查机制');
       }
     );
   }
