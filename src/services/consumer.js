@@ -16,6 +16,7 @@ export async function adds(params) {
 }
 
 export async function seach() {
+  console.log('wonm');
   const token = sessionStorage.getItem('token');
   return request('/server/api/consumer/detailed', {
     headers: { Authorization: `Bearer ${token}` },
