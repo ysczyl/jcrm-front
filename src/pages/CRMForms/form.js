@@ -2,23 +2,28 @@ import React from "react";
 import styles from './style.less';
 import { Table, Divider, Tag,Button } from 'antd';
 import Link from 'umi/link';
+import { connect } from 'dva';
 import New from '@/components/CRMCustomer/New';
-
-const ButtonGroup = Button.Group;
-const columns = [{
+const columns = [
+{
+  title: '关联码',
+  dataIndex: 'cid',
+  key: 'cid',
+  render: text => <Link to={{pathname:"/form/advanced-form",state:{cid:text}}}>{text}</Link>,
+},{
   title: '客户名',
-  dataIndex: 'name',
-  key: 'name',
-  render: text => <Link to={{pathname:"/form/advanced-form",state:{name:text}}}>{text}</Link>,
+  dataIndex: 'cid',
+  key: 'cid',
 }, {
   title: '电话',
   dataIndex: 'age',
   key: 'age',
 }, {
-  title: '客户所有人别名',
-  dataIndex: 'address',
-  key: 'address',
-}, {
+  title: '网址',
+  dataIndex: 'website',
+  key: 'website',
+}
+,  {
   title: 'Action',
   key: 'action',
   render: (text, record) => (
@@ -30,63 +35,37 @@ const columns = [{
   ),
 }];
 
-
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  age: 32,
-  address: 'New York No. 1 Lake Park',
-  tags: ['nice', 'developer'],
-}, {
-  key: '2',
-  name: 'Jim Green',
-  age: 42,
-  address: 'London No. 1 Lake Park',
-  tags: ['loser'],
-}, {
-  key: '3',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}];
+const ButtonGroup = Button.Group;
+@connect(({ consumer, loading }) => ({
+  consumer,
+  projectLoading: loading.effects['consumer/customerList'],
+}))
 class Forms extends React.Component {
-
+    constructor(props) {
+        super(props)
+        this.state = {
+          list:[],
+    };
+    }
+customerList=(e)=> {
+    const { dispatch } = this.props;
+        dispatch({
+        type: 'consumer/customerList',
+      });
+}
+  componentDidMount(){
+      this.customerList();
+  }
+  componentWillReceiveProps(nextProps){
+  this.setState({
+            list: nextProps.consumer.list,
+        });
+  }
   render() {
     return (
       <div>
           <New />
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={this.state.list}  />
       </div>
     );
   }
