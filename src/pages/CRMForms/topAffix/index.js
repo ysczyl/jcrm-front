@@ -1,15 +1,26 @@
 import React from "react";
 import { Table, Divider, Tag,Affix, Button,Avatar,Icon  } from 'antd';
 import styles from './style.less';
+import { connect } from 'dva';
 const ButtonGroup = Button.Group;
+@connect(({ consumer, loading }) => ({
+  consumer,
+  projectLoading: loading.effects['consumer/customerSearch'],
+}))
 class Affixs extends React.Component {
     state = {
     top: 0,
     bottom: 10,
   }
-    componentWillMount(){
-    console.log(this.props.name)//val值
-}
+    componentDidMount(){
+      console.log(this.props.cid)
+      const { dispatch } = this.props;
+        dispatch({
+        type: 'consumer/customerSearch',
+        cid: this.props.cid,
+      });
+        console.log(this.props)
+  }
   render() {
     return (
         <Affix offsetTop={this.state.top} style={{width:'100%',height:100}}>

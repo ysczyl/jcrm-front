@@ -25,8 +25,8 @@ const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const StepBox = React.lazy(() => import('./step/StepBox'));
 const Activity = React.lazy(() => import('./StepForm/Activity'));
-@connect(({ chart, loading }) => ({
-  chart,
+@connect(({ CRMchart, loading }) => ({
+  CRMchart,
   loading: loading.effects['chart/fetch'],
 }))
 class AdvancefProfile extends PureComponent {
@@ -47,8 +47,8 @@ class AdvancefProfile extends PureComponent {
     );
   }
   render() {
-    const { chart, loading } = this.props;
-    const { visitData } = chart;
+    const { CRMchart, loading } = this.props;
+    const { visitData } = CRMchart;
     return (
       <GridContent>
         <Suspense fallback={<PageLoading />}>

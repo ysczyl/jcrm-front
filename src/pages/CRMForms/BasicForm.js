@@ -33,14 +33,14 @@ class BasicForms extends PureComponent {
   constructor(props){
     super();
     this.state={
-      name:'1',
+      cid:'1',
     }
   }
   componentWillMount(){
    this.setState({
-              name: this.props.location.state.name //把父组件中的parentText替换为子组件传递的值
+              cid: this.props.location.state.cid //把父组件中的parentText替换为子组件传递的值
           },() =>{
-             console.log(this.state.name);//setState是异步操作，但是我们可以在它的回调函数里面进行操作
+             console.log(this.state.cid);//setState是异步操作，但是我们可以在它的回调函数里面进行操作
           });
   }
   render() {
@@ -51,7 +51,7 @@ class BasicForms extends PureComponent {
     return (
       <GridContent>
         <Suspense fallback={<PageLoading />}>
-          <TopAffix name={this.state.name} loading={loading} visitData={visitData} />
+          <TopAffix cid={this.state.cid} loading={loading} visitData={visitData} />
         </Suspense>
         <Suspense fallback={<PageLoading />}>
           <Detailed loading={loading} visitData={visitData} />
