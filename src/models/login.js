@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
 import { fakeAccountLogin, getFakeCaptcha } from '@/services/api';
-import { setAuthority } from '@/utils/authority';
+import { setAuthority, setUserToken } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
 import Base64 from 'crypto-js/enc-base64';
@@ -25,7 +25,7 @@ export default {
         console.log(`user:${user}`);
         user.status = true;
         console.log(user);
-        sessionStorage.setItem('token', token);
+        user.token = token;
         yield put({
           type: 'changeLoginStatus',
           payload: user,
@@ -64,7 +64,7 @@ export default {
     },
 
     *logout(_, { put }) {
-      sessionStorage.clear();
+      localStorage.clear();
       yield put({
         type: 'changeLoginStatus',
         payload: {
@@ -88,7 +88,9 @@ export default {
     changeLoginStatus(state, { payload }) {
       console.log(payload);
       setAuthority(payload.authority);
-
+      if (payload.token) {
+        setUserToken(payload.token);
+      }
       return {
         ...state,
         status: payload.status,

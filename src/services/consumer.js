@@ -4,13 +4,11 @@ export async function adds(params) {
   const token = sessionStorage.getItem('token');
   console.log('111111');
   return request('/server/api/consumer', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      method: 'POST',
-      body: {
-        ...params,
-        method: 'post',
-      },
+    headers: { Authorization: `Bearer ${token}` },
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
     },
   });
 }
