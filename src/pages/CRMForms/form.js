@@ -54,6 +54,7 @@ customerList=(e)=> {
       });
 }
   componentDidMount(){
+    console.log("111")
       this.customerList();
   }
   componentWillReceiveProps(nextProps){

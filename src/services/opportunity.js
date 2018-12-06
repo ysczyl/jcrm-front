@@ -215,3 +215,13 @@ export async function rejectApplication(params) {
         },
     });
 }
+
+
+
+export async function customerList(params) {
+    const token = sessionStorage.getItem('token');
+    return request('/server/api/consumer/listOfficial', {
+      headers: { Authorization: `Bearer ${token}`, method: 'GET' },
+    });
+  }
+

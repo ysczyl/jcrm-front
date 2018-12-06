@@ -65,15 +65,21 @@ class Affixs extends React.Component {
                 <table>
                   <tr>
                     <td>电话</td>
-                    <td>开单地址</td>
+                    <td>国家</td>
+                    <td>省份</td>
+                    <td>城市</td>
+                    <td>具体地址</td>
                     <td>网址</td>
                     <td>客户所有人</td>
                   </tr>
                   <tr>
                     <td>15858293500</td>
-                    <td>浙江省杭州市临安区胜联路168号</td>
-                    <td>www.baidu.com</td>
-                    <td>袁少城</td>
+                    <td>{this.state.flag?this.state.list.customerSearch[0][0].country:""}</td>
+                    <td>{this.state.flag?this.state.list.customerSearch[0][0].province:""}</td>
+                    <td>{this.state.flag?this.state.list.customerSearch[0][0].city:""}</td>
+                    <td>{this.state.flag?this.state.list.customerSearch[0][0].street:""}</td>
+                    <td>{this.state.flag?this.state.list.customerSearch[1][0].website:""}</td>
+                    <td>{this.state.flag?this.state.list.customerSearch[1][0].consumerName:""}</td>
                   </tr>
                 </table>
             </div>

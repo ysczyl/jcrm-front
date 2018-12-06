@@ -1,4 +1,4 @@
-import { getOpportunityList,getSourceList,getStageList,getReasonList,getOpportunitySourceList,getStatusList,getTypeList,getRecordList,getChartList,insertOpportunity,insertSource,insertApplication,updateOpportunity,deleteOpportunity,updateOpportunityPartial,updateSource,agreeApplication,rejectApplication } from '@/services/opportunity';
+import { getOpportunityList,getSourceList,getStageList,getReasonList,getOpportunitySourceList,getStatusList,getTypeList,getRecordList,getChartList,insertOpportunity,insertSource,insertApplication,updateOpportunity,deleteOpportunity,updateOpportunityPartial,updateSource,agreeApplication,rejectApplication,customerList } from '@/services/opportunity';
 
 export default {
   namespace: 'opportunity',
@@ -13,6 +13,7 @@ export default {
     typeList:[],
     recordList:[],
     chartList:[],
+    list:[],
   },
   effects: {
     //获取商业机会列表信息可跟关键字查询
@@ -241,11 +242,24 @@ export default {
             response.status = false;
         }
     },
+        //客户列表
+        *customerList({ payload }, { call, put }) {
+            const response = yield call(customerList, payload);
+            console.log(response)
+            if (response) {
+              yield put({
+                type: 'shows',
+                payload: response,
+              });
+            }else{
+            }
+          },
 
   },
 
   reducers: {
     showOpportunityList(action){
+        console.log("ysc")
         return{
             opportunityList:action.payload.data.list,
         };
@@ -361,6 +375,12 @@ export default {
             action:response.payload,
         };
     },
+    shows(state,action){
+        console.log(state)
+        return{
+          list:action.payload.data.list,
+        };
+      },
 
   },
 

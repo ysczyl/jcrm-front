@@ -11,17 +11,12 @@ export default {
   effects: {
     *submit({ payload }, { call, put }) {
       const response = yield call(add, payload);
-      console.log('uuu');
-      console.log(response);
-      if (response.code === 200) {
-        console.log(response);
-        console.log(payload);
+      if (response) {
+        yield put({
+          type: 'save',
+          payload: response,
+        });
       } else {
-        response.status = false;
-        // yield put({
-        //   type: 'changeLoginStatus',
-        //   payload: response,
-        // });
       }
     },
 
@@ -64,6 +59,12 @@ export default {
       return{
         customerSearch:action.payload.data,
       };
+    },
+    save(state,action){
+      return{
+        ...state,
+        action:response.payload,
+      }
     },
   },
 };
