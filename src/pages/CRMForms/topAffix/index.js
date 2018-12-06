@@ -15,6 +15,7 @@ class Affixs extends React.Component {
       bottom: 10,
       list:[],
       cid:this.props.cid,
+      flag:false,
 };
 }
 
@@ -25,24 +26,34 @@ class Affixs extends React.Component {
     payload: {cid:this.state.cid,}
   });
 }
+  flags=(e)=>{
+    console.log(this.state.list)
+    if(this.state.list.length != 0){
+      this.setState({
+        flag:true,
+      },()=>{console.log(this.state.flag)});
+    }
+  }
   componentDidMount(){
     this.customerSearch();
-    console.log(this.props)
+    this.flags();
 }
   componentWillReceiveProps(nextProps){
     this.setState({
-      list: nextProps.consumer.list,
-  });
+      list: nextProps.consumer,
+  },()=>{console.log(this.state.list)});
+     this.flags();
   }
   render() {
+    console.log(this.state.list)
     return (
         <Affix offsetTop={this.state.top} style={{width:'100%',height:100}}>
         <div className={styles.Affix}>
             <div className={styles.DIVAvatar}><Avatar src={'http://193.112.92.136/imgs/react.jpg'} className={styles.Avatar} /></div>
-            <div className={styles.DIVSpan}><span className={styles.cosSpan}>客户</span><br /><strong className={styles.nameStrong}>{this.props.name}</strong></div>
+            <div className={styles.DIVSpan}><span className={styles.cosSpan}>客户</span><br /><strong className={styles.nameStrong}>{this.state.flag?this.state.list.customerSearch[1][0].consumerName:"ysc"}</strong></div>
             <div className={styles.DIVbtn1}>
               <ButtonGroup>
-                <Button>查看客户层次结构</Button>
+                
                 <Button>编辑</Button>
                 <Button>删除</Button>
                 <Button>新建备注</Button>
