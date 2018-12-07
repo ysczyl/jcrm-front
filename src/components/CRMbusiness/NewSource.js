@@ -33,10 +33,11 @@ class NewSource extends React.Component {
 	    "sendCount": document.getElementById('sendCount').value,
 	    "responsePercentage": document.getElementById('responsePercentage').value,
 	    "expectedIncome": document.getElementById('expectedIncome').value,
-		"budgetCost": document.getElementById('budgetCost').value,
-		"actualCost": document.getElementById('actualCost').value,
+	  	"budgetCost": document.getElementById('budgetCost').value,
+	  	"actualCost": document.getElementById('actualCost').value,
 	    "sdate": sdate,
-	    "edate": edate,
+			"edate": edate,
+			"typeId": '2',
 		}
     console.log(e);
     this.setState({
