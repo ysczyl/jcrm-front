@@ -16,59 +16,62 @@ import {
   Util
 } from "bizcharts";
 import DataSet from "@antv/data-set";
+import { connect } from 'dva';
 
+// 定义data
+const data = [
+  {month: "Jan","money": 0.0,},
+  {month: "Feb","money": 0.0,},
+  {month: "Mar","money": 0.0,},
+  {month: "Apr","money": 0.0,},
+  {month: "May","money": 0.0,},
+  {month: "Jun","money": 0.0,},
+  {month: "Jul","money": 0.0,},
+  {month: "Aug","money": 0.0,},
+  {month: "Sep","money": 0.0,},
+  {month: "Oct","money": 0.0,},
+  {month: "Nov","money": 0.0,},
+  {month: "Dec","money": 0.0,}
+];
+
+// 
+@connect(({ chart, loading }) => ({
+  chart,
+  projectLoading: loading.effects['chart/submit'],
+}))
 class Curved extends React.Component {
-  render() {
-    const data = [
-      {
-        month: "Jan",
-        money: 0.0,
-      },
-      {
-        month: "Feb",
-        money: 6.9,
-      },
-      {
-        month: "Mar",
-        money: 15.6,
-      },
-      {
-        month: "Apr",
-        money: 30.8,
-      },
-      {
-        month: "May",
-        money: 50.7,
-      },
-      {
-        month: "Jun",
-        money: 88.3,
-      },
-      {
-        month: "Jul",
-        money: 135.2,
-      },
-      {
-        month: "Aug",
-        money: 186.5,
-      },
-      {
-        month: "Sep",
-        money: 222.2,
-      },
-      {
-        month: "Oct",
-        money: 234.9,
-      },
-      {
-        month: "Nov",
-        money: 255.5,
-      },
-      {
-        month: "Dec",
-        money: 276.9,
+  constructor(props) {
+    super(props)
+    this.state = {
+      list:[],
+      flag:false,
+};
+}
+  // 对有数据的月份 进行赋值
+  flag=(e)=>{
+    if(this.state.list.length !=0){
+      for(var i = 0;i<this.state.list.data.length;i++){
+        const s = this.state.list.data[i].money;
+       data[this.state.list.data[i].month-1].money = s;
+       this.setState({
+        flag:this.state.flag?false:true,
+      })
       }
-    ];
+    }
+  }
+  componentDidMount(){
+    const { dispatch } = this.props;
+    dispatch({
+      type:'chart/submit',
+    });
+  }
+  componentWillReceiveProps(nextProps){
+    this.setState({
+        list: nextProps.chart.list,
+          },()=>{this.flag()});
+          this.flag();
+    }
+  render() {
     const moneyDown = 138000;
     const moneyNo = 139500;
     const moneySign = 250000;
@@ -90,7 +93,7 @@ class Curved extends React.Component {
     };
     return (
       <div className={styles.QuarterlyResults}>
-        <strong className={styles.jySpan}>业绩</strong><br />
+        <strong className={styles.jySpan}>业绩(名词暂定)</strong><br />
         <span className={styles.count}>已结束<strong>￥{moneyDown}</strong></span>
         <span className={styles.count}>未处理<strong>￥{moneyNo}</strong></span>
         <span className={styles.count}>目标<strong>￥{moneySign}</strong></span>
