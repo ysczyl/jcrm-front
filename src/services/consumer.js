@@ -13,6 +13,14 @@ export async function customerList(params) {
   });
 }
 
+export async function customerDelete(params) {
+  const token = sessionStorage.getItem('token');
+  return request('/server/api/consumer/delete?cid='+params.cid, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}`, },
+  });
+}
+
 export async function customerSearch(params) {
   const token = sessionStorage.getItem('token');
   return request('/server/api/consumer/detailed?cid='+params.cid, {

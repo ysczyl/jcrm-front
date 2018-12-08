@@ -104,10 +104,10 @@ export async function insertOpportunity(params) {
     const token = sessionStorage.getItem('token');
     return request(`/server/opportunity`, {
         method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
         body: {
             ...params,
             method: 'post',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }

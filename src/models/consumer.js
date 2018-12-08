@@ -1,4 +1,4 @@
-import { add,customerList,customerSearch } from '@/services/consumer';
+import { add,customerList,customerSearch,customerDelete } from '@/services/consumer';
 import { bindEnterprise, adds } from '@/services/enterprise';
 export default {
   namespace: 'consumer',
@@ -46,6 +46,19 @@ export default {
       }
     },
 
+    //删除客户
+      *customerDelete({ payload }, { call, put }) {
+      const response = yield call(customerDelete, payload);
+      if (response) {
+        yield put({
+          type: 'delete',
+          payload: response,
+        });
+      }else{
+        console.log("ysc")
+      }
+    },
+
   },
   reducers: {
     show(state,action){
@@ -66,5 +79,12 @@ export default {
         action:response.payload,
       }
     },
+    delete(state,action){
+      return{
+        ...state,
+        action:response.payload,
+      }
+    },
+    
   },
 };

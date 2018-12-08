@@ -135,7 +135,7 @@ export default {
                 payload: response,
             });
         } else {
-            response.status = false;
+          
         }
     },
 
@@ -315,7 +315,7 @@ export default {
         };
     },
 
-    saveOpportunity(state){
+    saveOpportunity(state,action){
         return{
             ...state,
             action:response.payload,

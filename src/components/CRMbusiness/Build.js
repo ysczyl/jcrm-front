@@ -26,6 +26,7 @@ const { TextArea } = Input;
   submitting: loading.effects['opportunity/customerList'],
   submitting: loading.effects['opportunity/getSourceList'],
   submitting: loading.effects['opportunity/getStageList'],
+  submitting: loading.effects['opportunity/insertOpportunity'],
 }))
 class Build extends React.Component {
   constructor(props) {
@@ -68,8 +69,12 @@ class Build extends React.Component {
       visible: false,
     });
     const { dispatch } = this.props;
-    console.log(this.props)
-    	console.log(dispatch)
+    dispatch({
+      type: 'opportunity/insertOpportunity',
+      payload: {
+        ...values,
+      },
+    });
 
   }
   handleOks = (e) => {
@@ -165,7 +170,7 @@ handleCancels = (e) => {
           </ButtonGroup>
 	           <Modal
 	          width='950px'
-	          title="新建"
+	          title="新建商业机会"
 	          visible={this.state.visible}
 	          onOk={this.handleOk}
 	          onCancel={this.handleCancel}
@@ -177,7 +182,7 @@ handleCancels = (e) => {
 	        			<span className={styles.InputSpanX}>*</span>
 	        			<span>业务机会名</span>
 	        		</div>
-	        		<Input id='username' className={styles.InputS} />
+	        		<Input id='oppName' className={styles.InputS} />
 	        		<div className={styles.kehuSpan}>
 	        			<span>业务机会所有人</span>
 	        		</div>
