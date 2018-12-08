@@ -129,11 +129,11 @@ export async function insertSource(params) {
 export async function insertApplication(params) {
     const token = sessionStorage.getItem('token');
     return request(`/server/opportunity/application`, {
+        headers: { Authorization: `Bearer ${token}` },
         method: 'POST',
         body: {
             ...params,
             method: 'post',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }
@@ -142,11 +142,11 @@ export async function insertApplication(params) {
 export async function updateOpportunity(params) {
     const token = sessionStorage.getItem('token');
     return request(`/server/opportunity`, {
+        headers: { Authorization: `Bearer ${token}` },
         method: 'POST',
         body: {
             ...params,
             method: 'update',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }
@@ -155,11 +155,11 @@ export async function updateOpportunity(params) {
 export async function deleteOpportunity(params) {
     const token = sessionStorage.getItem('token');
     return request(`/server/opportunity/delete`, {
+        headers: { Authorization: `Bearer ${token}` },
         method: 'POST',
         body: {
             ...params,
             method: 'update',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }
@@ -168,11 +168,11 @@ export async function deleteOpportunity(params) {
 export async function updateOpportunityPartial(params) {
     const token = sessionStorage.getItem('token');
     return request(`/server/opportunity/partial`, {
+        headers: { Authorization: `Bearer ${token}` },
         method: 'POST',
         body: {
             ...params,
             method: 'update',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }
@@ -181,11 +181,11 @@ export async function updateOpportunityPartial(params) {
 export async function updateSource(params) {
     const token = sessionStorage.getItem('token');
     return request(`/server/opportunity/source`, {
+        headers: { Authorization: `Bearer ${token}` },
         method: 'POST',
         body: {
             ...params,
             method: 'update',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }
@@ -194,11 +194,11 @@ export async function updateSource(params) {
 export async function agreeApplication(params) {
     const token = sessionStorage.getItem('token');
     return request(`/server/opportunity/agree`, {
+        headers: { Authorization: `Bearer ${token}` },
         method: 'POST',
         body: {
             ...params,
             method: 'update',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }
@@ -207,11 +207,11 @@ export async function agreeApplication(params) {
 export async function rejectApplication(params) {
     const token = sessionStorage.getItem('token');
     return request(`/server/opportunity/reject`, {
+        headers: { Authorization: `Bearer ${token}` },
         method: 'POST',
         body: {
             ...params,
             method: 'update',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }
