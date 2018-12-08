@@ -1,4 +1,4 @@
-import { add,customerList,customerSearch } from '@/services/consumer';
+import { add,customerList,customerSearch,customerDelete } from '@/services/consumer';
 import { bindEnterprise, adds } from '@/services/enterprise';
 export default {
   namespace: 'consumer',
@@ -7,20 +7,16 @@ export default {
     list:[],
     customerSearch:[],
   },
+  
   effects: {
     *submit({ payload }, { call, put }) {
       const response = yield call(add, payload);
-      console.log('uuu');
-      console.log(response);
-      if (response.code === 200) {
-        console.log(response);
-        console.log(payload);
+      if (response) {
+        yield put({
+          type: 'save',
+          payload: response,
+        });
       } else {
-        response.status = false;
-        // yield put({
-        //   type: 'changeLoginStatus',
-        //   payload: response,
-        // });
       }
     },
 
@@ -40,11 +36,27 @@ export default {
     //客户详细信息
       *customerSearch({ payload }, { call, put }) {
       const response = yield call(customerSearch, payload);
-      customerSearch=response;
+      if (response) {
         yield put({
           type: 'showSearch',
           payload: response,
         });
+      }else{
+        
+      }
+    },
+
+    //删除客户
+      *customerDelete({ payload }, { call, put }) {
+      const response = yield call(customerDelete, payload);
+      if (response) {
+        yield put({
+          type: 'delete',
+          payload: response,
+        });
+      }else{
+        console.log("ysc")
+      }
     },
 
   },
@@ -56,9 +68,23 @@ export default {
     },
 
     showSearch(state,action){
+      console.log(action.payload.data)
       return{
-        customerSearch:action.payload,
+        customerSearch:action.payload.data,
       };
     },
+    save(state,action){
+      return{
+        ...state,
+        action:response.payload,
+      }
+    },
+    delete(state,action){
+      return{
+        ...state,
+        action:response.payload,
+      }
+    },
+    
   },
 };

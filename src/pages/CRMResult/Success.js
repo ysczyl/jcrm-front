@@ -2,11 +2,13 @@ import React from "react";
 import styles from './style.less';
 import { Table, Divider, Tag } from 'antd';
 import Link from 'umi/link';
+import { connect } from 'dva';
+import Build from '@/components/CRMbusiness/Build';
 
 const columns = [{
   title: '业务机会名',
-  dataIndex: 'name',
-  key: 'name',
+  dataIndex: 'oppName',
+  key: 'oppName',
   render: text => <Link to={{pathname:"/result/fail",state:{name:text}}}>{text}</Link>,
 }, {
   title: '客户名',
@@ -14,18 +16,18 @@ const columns = [{
   key: 'age',
 }, {
   title: '阶段',
-  dataIndex: 'address',
-  key: 'address',
+  dataIndex: 'oppStageId',
+  key: 'oppStageId',
 }
 , {
   title: '结束日期',
-  dataIndex: 'data',
-  key: 'data',
+  dataIndex: 'deadline',
+  key: 'deadline',
 }
 , {
-  title: '业务人员别名',
-  dataIndex: 'oname',
-  key: 'oname',
+  title: '机会所有人编号',
+  dataIndex: 'holder',
+  key: 'holder',
 }, {
   title: 'Action',
   key: 'action',
@@ -38,61 +40,45 @@ const columns = [{
   ),
 }];
 
-
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  age: 32,
-  address: 'New York No. 1 Lake Park',
-  tags: ['nice', 'developer'],
-}, {
-  key: '2',
-  name: 'Jim Green',
-  age: 42,
-  address: 'London No. 1 Lake Park',
-  tags: ['loser'],
-}, {
-  key: '3',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}, {
-  key: '2',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-  tags: ['cool', 'teacher'],
-}];
+@connect(({ opportunity, loading }) => ({
+  opportunity,
+  projectLoading: loading.effects['opportunity/getOpportunityList'],
+}))
 class Success extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      opportunityList:[],
+      opportunityListflag:false,
+};
+}
+opportunityListflags=(e)=>{
+  if(this.state.opportunityList.length != 0){
+    this.setState({
+      opportunityListflag:true,
+    },()=>{console.log(this.state.opportunityListflag)});
+  }
+}
+getOpportunityList=(e)=> {
+  const { dispatch } = this.props;
+  dispatch({
+      type: 'opportunity/getOpportunityList',
+    });
+}
+componentDidMount(){
+  this.getOpportunityList();
+}
+componentWillReceiveProps(nextProps){
+  this.setState({
+        opportunityList: nextProps.opportunity.opportunityList,
+    },()=>{console.log(this.state.opportunityList)});
+    this.opportunityListflags();
+}
   render() {
     return (
       <div>
-          <Table columns={columns} dataSource={data} />
+          <Build />
+          <Table columns={columns} dataSource={this.state.opportunityListflag?this.state.opportunityList:""} />
       </div>
     );
   }

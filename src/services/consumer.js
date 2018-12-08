@@ -27,13 +27,23 @@ export async function customerList(params) {
   });
 }
 
+export async function customerDelete(params) {
+  const token = sessionStorage.getItem('token');
+  return request('/server/api/consumer/delete?cid='+params.cid, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}`, },
+  });
+}
+
 export async function customerSearch(params) {
+<<<<<<< HEAD
   const token = getUserToken();
   return request('/server/api/consumer/detailed', {
+=======
+  const token = sessionStorage.getItem('token');
+  return request('/server/api/consumer/detailed?cid='+params.cid, {
+>>>>>>> 3061924f39edca275df61c442643e5b16c21413d
     headers: {   Authorization: `Bearer ${token}` ,method: 'GET' },
-      body: {
-        "cid":11
-      },
   });
 }
 

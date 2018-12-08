@@ -20,16 +20,41 @@ class New extends React.Component {
   }
 
   handleOk = (e) => {
-  	const values = {
-	    "consumerName": "ysc",
-	    "contactName": "22222",
-	    "department": "1111",
-	    "email": "1239864102@qq.com",
-	    "familyName": "qqq",
-	    "firstName": "11",
-	    "telephone": "ysc",
-    }
-    console.log(e);
+  	// const values = {
+		// 	"address":{
+		// 		"country": document.getElementById('country').value,
+		// 		"city": document.getElementById('city').value,
+		// 		"province": document.getElementById('province').value,
+		// 		"street": document.getElementById('street').value,
+		// 	},
+		// 	"consumerName": document.getElementById('username').value,
+		// 	"contact":{
+		// 		"department": document.getElementById('mum').value,
+		// 		"contactName": document.getElementById('lx').value,
+		// 		"phone": document.getElementById('phone').value,
+		// 	},
+	  //   "website": document.getElementById('website').value,
+		// 	"state": 0,
+		// 	"isOfficial": 1,
+		// }
+		const values = {
+			"address": {
+				"city": document.getElementById('city').value,
+				"country": document.getElementById('country').value,
+				"province": document.getElementById('province').value,
+				"street": document.getElementById('street').value,
+			},
+			"consumerName": document.getElementById('username').value,
+			"contact": {
+				"contactName": document.getElementById('lx').value,
+				"department": document.getElementById('mum').value,
+				"phone": document.getElementById('phone').value,
+			},
+			"isOfficial": 1,
+			"state": 1,
+			"website": document.getElementById('website').value
+		}
+ console.log(values)
     console.log(e);
     this.setState({
       visible: false,
@@ -40,7 +65,7 @@ class New extends React.Component {
           dispatch({
         type: 'consumer/submit',
         payload: {
-          values,
+          ...values,
         },
       });
 
@@ -81,84 +106,58 @@ class New extends React.Component {
 	        	</div>
 	            <div className={styles.leixinBox}>
 	        		<div className={styles.InputBeforeBox}>
-	        			<span className={styles.spanL}>类型</span>
+	        			<span style={{marginLeft:24}}>类型</span>
 	        		</div>
-	        		<Input className={styles.InputS} />
+	        		<Input id='lx' className={styles.InputS} />
 	        		<div className={styles.kehuSpan}>
 	        			<span>母公司</span>
 	        		</div>
-	        		<Input className={styles.MGS}/>
+	        		<Input id='mum' className={styles.MGS}/>
 	        	</div>
 	        	<div className={styles.leixinBox}>
 	        		<div className={styles.InputBeforeBox}>
 	        			<span className={styles.SpanL}>网址</span>
 	        		</div>
-	        		<Input className={styles.InputS} />
+	        		<Input id='website' className={styles.InputS} />
 	        		<div className={styles.kehuSpan}>
 	        			<span>电话</span>
 	        		</div>
-	        		<Input className={styles.MGS} />
+	        		<Input id='phone' className={styles.MGS} />
 	        	</div>
 	        	<div className={styles.leixinBox}>
 	        		<div className={styles.InputBeforeBox}>
 	        			<span className={styles.SpanL}>描述</span>
 	        		</div>
-	        		<TextArea rows={2} className={styles.InputS} />
+	        		<TextArea id='describe' rows={2} className={styles.InputS} />
 	        		<div className={styles.kehuSpan}>
 	        			<span>行业</span>
 	        		</div>
-	        		<Input className={styles.MGS} />
+	        		<Input id='hangye' className={styles.MGS} />
 	        	</div>
 
 
 	        	<div className={styles.title}><span>地址信息</span></div>
-	        	<div className={styles.KDBox}>
-	        		<strong>开单地址</strong><br />
+	        	<div className={styles.KDBox} style={{width:'100%'}}>
+	        		<strong>客户地址</strong><br />
 	        		<div className={styles.KDBox}>
-	        			<span>开单国家/地区</span>
-	        			<Input className={styles.InputK} />
+	        			<span>客户国家/地区</span><br />
+	        			<Input id='country' className={styles.Inputbox} />
 	        		</div>
 	        		<div className={styles.KDBox}>
-	        			<span>开单州/省</span>
-	        			<Input className={styles.InputK} />
+	        			<span>客户州/省</span><br />
+	        			<Input id='province' className={styles.Inputbox} />
 	        		</div>
 	        		<div className={styles.Inputbox}>
-	        		<span>开单城市</span><br />
-	        		<Input className={styles.Inputbox} />
+	        		<span>客户城市</span><br />
+	        		<Input id='city' className={styles.Inputbox} />
 	        		</div>
 	        		<div className={styles.Inputbox}>
-	        		<span>开单街道</span><br />
-	        		<TextArea rows={2} className={styles.Inputbox} />
+	        		<span>客户街道</span><br />
+	        		<Input id='street' className={styles.Inputbox} />
 	        		</div>
 	        	    <div className={styles.Inputbox}>
-	        		<span>开单邮政编码</span><br />
-	        		<Input className={styles.Inputbox} />
 	        		</div>
 	        	</div>
-	        	<div className={styles.KDBox}>
-	        	    <strong>发货地址</strong><br />
-	        		<div className={styles.KDBox}>
-	        			<span>发货国家/地区</span>
-	        			<Input className={styles.InputK} />
-	        		</div>
-	        		<div className={styles.KDBox}>
-	        			<span>发货州/省</span>
-	        			<Input className={styles.InputK} />
-	        		</div>
-	        		<div className={styles.Inputbox}>
-	        		<span>发货城市</span><br />
-	        		<Input className={styles.Inputbox} />
-	        		</div>
-	        		<div className={styles.Inputbox}>
-	        		<span>发货街道</span><br />
-	        		<TextArea rows={2} className={styles.Inputbox} />
-	        		</div>
-	        	    <div className={styles.Inputbox}>
-	        		<span>发货邮政编码</span><br />
-	        		<Input className={styles.Inputbox} />
-	        		</div>
-	        	</div>
-
 	        </div>
 	        </Modal>
       </div>
