@@ -5,6 +5,10 @@ export default {
   state: {
     list: [],
     currentUser: {},
+    data: {
+      list: [],
+      pagination: {},
+    },
   },
 
   effects: {

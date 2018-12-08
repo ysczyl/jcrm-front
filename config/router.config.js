@@ -24,10 +24,11 @@ export default [
         name: '企业',
         component: './Enterprise/Enterprise',
       },
-
-
-
-
+      {
+        path: '/userManager',
+        name: 'admin',
+        component: './Admin/UserManager',
+      },
       {
         path: '/dashboard/analysis',
         name: '主页',
@@ -70,7 +71,7 @@ export default [
         name: '任务',
         icon: 'warning',
         path: '/exception/task',
-        component: './CRMException/Task',
+        component: './Task/Task',
       },
       {
         //部门
