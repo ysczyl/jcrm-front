@@ -78,6 +78,7 @@ class Forms extends React.Component {
           }];
         this.state = {
           list:[],
+          ref:true,
     };
     }
     //请求客户列表
@@ -86,6 +87,13 @@ class Forms extends React.Component {
             dispatch({
             type: 'consumer/customerList',
           });
+    }
+    //二次查询同步操作
+    customerLists=(e)=>{
+      if(this.state.ref){
+        this.customerList();
+        this.setState({ref:false});
+      }
     }
 //删除客户
     delete=(values)=> {
@@ -97,6 +105,7 @@ class Forms extends React.Component {
             ...cid,
           }
         });
+        this.setState({ref:true},()=>{this.customerLists()})
     }
   componentDidMount(){
     this.customerList();

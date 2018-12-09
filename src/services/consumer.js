@@ -28,7 +28,7 @@ export async function customerList(params) {
 }
 
 export async function customerDelete(params) {
-  const token = sessionStorage.getItem('token');
+  const token = getUserToken();
   return request('/server/api/consumer/delete?cid='+params.cid, {
     method: 'PUT',
     headers: { Authorization: `Bearer ${token}`, },

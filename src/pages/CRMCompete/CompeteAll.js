@@ -36,10 +36,10 @@ import New from '@/components/CRMCustomer/New';
 // }];
 
 const ButtonGroup = Button.Group;
-@connect(({ consumer, loading }) => ({
-  consumer,
-  projectLoading: loading.effects['consumer/customerList'],
-  submitting: loading.effects['consumer/customerDelete'],
+@connect(({ competitors, loading }) => ({
+  competitors,
+  projectLoading: loading.effects['competitors/getCompetitorsList'],
+  submitting: loading.effects['competitors/deleteCompetitors'],
 }))
 class CompeteAll extends React.Component {
     constructor(props) {
@@ -47,26 +47,26 @@ class CompeteAll extends React.Component {
         this.columns = [
           {
             title: '关联码',
-            dataIndex: 'cid',
-            key: 'cid',
+            dataIndex: 'competitorId',
+            key: 'competitorId',
             render: text => <Link to={{pathname:"/compete/detailed",state:{cid:text}}}>{text}</Link>,
           },{
             title: '竞争对手名',
-            dataIndex: 'cid',
-            key: 'consumerName',
+            dataIndex: 'competitorName',
+            key: 'competitorId',
             render: text => <Link to={{pathname:"/compete/detailed",state:{cid:text}}}>{text}</Link>,
           }, {
-            title: '电话',
-            dataIndex: 'age',
-            key: 'age',
+            title: '重要程度',
+            dataIndex: 'ex1',
+            key: 'ex1',
           }, {
-            title: '网址',
-            dataIndex: 'website',
-            key: 'website',
+            title: '类型',
+            dataIndex: 'types',
+            key: 'types',
           }
           ,  {
             title: 'Action',
-            dataIndex: 'cid',
+            dataIndex: 'competitorId',
             key: 'action',
             render: text => (
               <span>
@@ -77,40 +77,50 @@ class CompeteAll extends React.Component {
             ),
           }];
         this.state = {
-          list:[],
+          competitorsList:[],
+          ref:false,
     };
     }
     //请求客户列表
-    customerList=(e)=> {
+    getCompetitorsList=(e)=> {
         const { dispatch } = this.props;
             dispatch({
-            type: 'consumer/customerList',
+            type: 'competitors/getCompetitorsList',
           });
     }
+        //二次查询同步操作
+  getCompetitorsLists=(e)=>{
+      if(this.state.ref){
+        this.getCompetitorsList();
+        this.setState({ref:false});
+      }
+    }
 //删除客户
-    delete=(values)=> {
-      const cid = {cid:values};
+    delete=(e)=> {
+      console.log(e)
+      const competitorId = {competitorId:e};
       const { dispatch } = this.props;
           dispatch({
-          type: 'consumer/customerDelete',
+          type: 'competitors/deleteCompetitors',
           payload:{
-            ...cid,
+            ...competitorId,
           }
         });
+        this.setState({ref:true},()=>{this.getCompetitorsLists()})
     }
   componentDidMount(){
-    this.customerList();
+    this.getCompetitorsList();
   }
   componentWillReceiveProps(nextProps){
   this.setState({
-            list: nextProps.consumer.list,
+    competitorsList: nextProps.competitors.competitorsList,
         });
   }
   render() {
     return (
       <div>
           <New />
-          <Table columns={this.columns} dataSource={this.state.list}  />
+          <Table columns={this.columns} dataSource={this.state.competitorsList}  />
       </div>
     );
   }

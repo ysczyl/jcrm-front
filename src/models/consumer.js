@@ -82,7 +82,6 @@ export default {
     delete(state,action){
       return{
         ...state,
-        action:response.payload,
       }
     },
     

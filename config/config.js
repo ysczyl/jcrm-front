@@ -83,6 +83,11 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/server': '' },
     },
+    '/server/competitors': {
+      target: 'http://www.aeiou.xin:8080',
+      changeOrigin: true,
+      pathRewrite: { '^/server': '' },
+    },
   },
   ignoreMomentLocale: true,
   lessLoaderOptions: {

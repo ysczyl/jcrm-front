@@ -65,7 +65,7 @@ export default {
 
         //删除竞争对手信息(修改状态)
         *deleteCompetitors({ payload }, { call, put }) {
-            const response = yield call(add, payload);
+            const response = yield call(deleteCompetitors, payload);
             if (response.code === 200) {
                 yield put({
                     type: 'removeCompetitors',
