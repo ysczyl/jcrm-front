@@ -128,7 +128,8 @@ export default {
 
     //添加商业机会(只有上级有权限)
     *insertOpportunity({ payload }, { call, put }) {
-        const response = yield call(add, payload);
+        const response = yield call(insertOpportunity, payload);
+        console.log("ysc")
         if (response.code === 200) {
             yield put({
                 type: 'saveOpportunity',

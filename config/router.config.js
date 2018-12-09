@@ -134,8 +134,10 @@ export default [
       {
         name: '竞争对手',
         icon: 'warning',
-        path: '/exception',
+        path: '/compete',
+        component: './CRMCompete/CompeteAll',
       },
+      { path: '/compete/detailed', component: './CRMCompete/Detailed' },
 
 
 

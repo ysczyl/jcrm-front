@@ -5,6 +5,8 @@ import New from '@/components/CRMCustomer/New';
 import NewSource from '@/components/CRMbusiness/NewSource';
 import { Table, Divider, Tag,Button,Modal,Input ,Checkbox,DatePicker,Select  } from 'antd';
 
+const deadline = "";
+const roiAnalysisCompleted = 0;
 const InputGroup = Input.Group;
 const Option = Select.Option;
 function Budget(e) {
@@ -17,7 +19,7 @@ function ROI(e) {
     console.log(`checked = ${e.target.checked}`);
   }
 function data(date, dateString) {
-    console.log(date, dateString);
+    deadline = data._d;
   }
 const ButtonGroup = Button.Group;
 const { TextArea } = Input;
@@ -62,7 +64,16 @@ class Build extends React.Component {
 
   handleOk = (e) => {
   	const values = {
-	    "1": document.getElementById('username').value,
+      "oppName": document.getElementById('oppName').value,
+      "deadline": deadline,
+      "possibility": document.getElementById('possibility').value,
+      "nextStep": document.getElementById('nextStep').value,
+      "roiAnalysisCompleted": document.getElementById('roiAnalysisCompleted').value,
+      "oppName": document.getElementById('oppName').value,
+      "oppName": document.getElementById('oppName').value,
+      "oppName": document.getElementById('oppName').value,
+      "oppName": document.getElementById('oppName').value,
+      "oppName": document.getElementById('oppName').value,
 		}
     console.log(e);
     this.setState({
@@ -238,7 +249,7 @@ handleCancels = (e) => {
 	        		<div className={styles.kehuSpan}>
 	        			<span>可能性</span>
 	        		</div>
-	        		<Input id='hangye' className={styles.MGS} />
+	        		<Input id='possibility' className={styles.MGS} />
 	        	</div>
                     <Checkbox style={{marginLeft:24}} onChange={Budget}>Budget Confirmed</Checkbox><br />
                     <Checkbox style={{marginLeft:24}} onChange={Discovery}>Discovery Completed</Checkbox><br />
@@ -248,7 +259,7 @@ handleCancels = (e) => {
 	        		<span>其他信息</span><br />
 	        		<div>
 	        			<span>下一步</span><br />
-	        			<Input id='province' className={styles.Inputbox} />
+	        			<Input id='nextStep' className={styles.Inputbox} />
 	        		</div>
 	        		<div>
 	        		<span>备注</span><br />
