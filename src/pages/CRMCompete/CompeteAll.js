@@ -61,8 +61,8 @@ class CompeteAll extends React.Component {
             key: 'ex1',
           }, {
             title: '类型',
-            dataIndex: 'types',
-            key: 'types',
+            dataIndex: 'status',
+            key: 'status',
           }
           ,  {
             title: 'Action',
@@ -98,7 +98,10 @@ class CompeteAll extends React.Component {
 //删除客户
     delete=(e)=> {
       console.log(e)
-      const competitorId = {competitorId:e};
+      const competitorId = {
+        competitorId:e,
+        status: 0
+      };
       const { dispatch } = this.props;
           dispatch({
           type: 'competitors/deleteCompetitors',
