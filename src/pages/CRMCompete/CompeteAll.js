@@ -48,13 +48,13 @@ class CompeteAll extends React.Component {
           {
             title: '关联码',
             dataIndex: 'competitorId',
-            key: 'competitorId',
-            render: text => <Link to={{pathname:"/compete/detailed",state:{cid:text}}}>{text}</Link>,
+            key: 'competitorName',
+            render: text => <Link to={{pathname:"/compete/detailed",state:{competitorName:text}}}>{text}</Link>,
           },{
             title: '竞争对手名',
             dataIndex: 'competitorName',
-            key: 'competitorId',
-            render: text => <Link to={{pathname:"/compete/detailed",state:{cid:text}}}>{text}</Link>,
+            key: 'competitorName',
+            render: text => <Link to={{pathname:"/compete/detailed",state:{competitorName:text}}}>{text}</Link>,
           }, {
             title: '重要程度',
             dataIndex: 'ex1',
@@ -86,6 +86,7 @@ class CompeteAll extends React.Component {
         const { dispatch } = this.props;
             dispatch({
             type: 'competitors/getCompetitorsList',
+            payload: {competitorName:"?competitorName=''",}
           });
     }
         //二次查询同步操作

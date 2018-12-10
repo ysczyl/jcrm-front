@@ -1,9 +1,9 @@
 import request from '@/utils/request';
 import { getUserToken } from '@/utils/authority'
 //获取竞争对手列表信息可跟关键字查询
-export async function getCompetitorsList() {
+export async function getCompetitorsList(params) {
     const token = getUserToken();
-    return request('/server/competitors', {
+    return request('/server/competitors'+params.competitorName, {
         headers: { 
             Authorization: `Bearer ${token}`, 
             method: 'GET' 

@@ -33,14 +33,14 @@ class Detailed extends PureComponent {
   constructor(props){
     super();
     this.state={
-      cid:'1',
+      competitorName:'1',
     }
   }
   componentWillMount(){
    this.setState({
-              cid: this.props.location.state.cid //把父组件中的parentText替换为子组件传递的值
+        competitorName: this.props.location.state.competitorName //把父组件中的parentText替换为子组件传递的值
           },() =>{
-             console.log(this.state.cid);//setState是异步操作，但是我们可以在它的回调函数里面进行操作
+             console.log(this.state.competitorName);//setState是异步操作，但是我们可以在它的回调函数里面进行操作
           });
   }
   render() {
@@ -51,7 +51,7 @@ class Detailed extends PureComponent {
     return (
       <GridContent>
         <Suspense fallback={<PageLoading />}>
-          <TopAffix cid={this.state.cid} loading={loading} visitData={visitData} />
+          <TopAffix competitorName={this.state.competitorName} loading={loading} visitData={visitData} />
         </Suspense>
         <Suspense fallback={<PageLoading />}>
           <Detaileds loading={loading} visitData={visitData} />

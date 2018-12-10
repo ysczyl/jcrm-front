@@ -3,9 +3,9 @@ import { Table, Divider, Tag,Affix, Button,Avatar,Icon  } from 'antd';
 import styles from './style.less';
 import { connect } from 'dva';
 const ButtonGroup = Button.Group;
-@connect(({ consumer, loading }) => ({
-  consumer,
-  projectLoading: loading.effects['consumer/customerSearch'],
+@connect(({ competitors, loading }) => ({
+  competitors,
+  projectLoading: loading.effects['competitors/getCompetitorsList'],
 }))
 class Affixs extends React.Component {
   constructor(props) {
@@ -14,16 +14,16 @@ class Affixs extends React.Component {
       top: 0,
       bottom: 10,
       list:[],
-      cid:this.props.cid,
+      competitorName:this.props.competitorName,
       flag:false,
 };
 }
 
-  customerSearch=(e)=> {
+getCompetitorsList=(e)=> {
     const { dispatch } = this.props;
     dispatch({
-    type: 'consumer/customerSearch',
-    payload: {cid:this.state.cid,}
+    type: 'competitors/getCompetitorsList',
+    payload: {competitorName:"?keyword="+this.state.competitorName}
   });
 }
   flags=(e)=>{
@@ -35,22 +35,22 @@ class Affixs extends React.Component {
     }
   }
   componentDidMount(){
-    this.customerSearch();
+    this.getCompetitorsList();
     this.flags();
 }
   componentWillReceiveProps(nextProps){
+    console.log(nextProps)
     this.setState({
-      list: nextProps.consumer,
+      list: nextProps.competitors,
   },()=>{console.log(this.state.list)});
      this.flags();
   }
   render() {
-    console.log(this.state.list)
     return (
         <Affix offsetTop={this.state.top} style={{width:'100%',height:100}}>
         <div className={styles.Affix}>
             <div className={styles.DIVAvatar}><Avatar src={'http://193.112.92.136/imgs/react.jpg'} className={styles.Avatar} /></div>
-            <div className={styles.DIVSpan}><span className={styles.cosSpan}>客户</span><br /><strong className={styles.nameStrong}>{this.state.flag?this.state.list.customerSearch[1][0].consumerName:"ysc"}</strong></div>
+            <div className={styles.DIVSpan}><span className={styles.cosSpan}>竞争对手名</span><br /><strong className={styles.nameStrong}>{this.state.flag?this.state.list.competitorsList[0].competitorName:"ysc"}</strong></div>
             <div className={styles.DIVbtn1}>
               <ButtonGroup>
                 
@@ -64,22 +64,16 @@ class Affixs extends React.Component {
             <div className={styles.DIVTable}>
                 <table>
                   <tr>
-                    <td>电话</td>
-                    <td>国家</td>
-                    <td>省份</td>
-                    <td>城市</td>
-                    <td>具体地址</td>
-                    <td>网址</td>
-                    <td>客户所有人</td>
+                    <td>重要程度</td>
+                    <td>描述</td>
+                    <td>关注状态</td>
+                    <td>关注类型</td>
                   </tr>
                   <tr>
-                    <td>15858293500</td>
-                    <td>{this.state.flag?this.state.list.customerSearch[0][0].country:""}</td>
-                    <td>{this.state.flag?this.state.list.customerSearch[0][0].province:""}</td>
-                    <td>{this.state.flag?this.state.list.customerSearch[0][0].city:""}</td>
-                    <td>{this.state.flag?this.state.list.customerSearch[0][0].street:""}</td>
-                    <td>{this.state.flag?this.state.list.customerSearch[1][0].website:""}</td>
-                    <td>{this.state.flag?this.state.list.customerSearch[1][0].consumerName:""}</td>
+                    <td>{this.state.flag?this.state.list.competitorsList[0].ex1:""}</td>
+                    <td>{this.state.flag?this.state.list.competitorsList[0].description:""}</td>
+                    <td>{this.state.flag?this.state.list.competitorsList[0].status:""}</td>
+                    <td>{this.state.flag?this.state.list.competitorsList[0].types:""}</td>
                   </tr>
                 </table>
             </div>
