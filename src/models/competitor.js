@@ -1,22 +1,48 @@
 import { getCompetitorsList,getMyCompetitorsList,insertCompetitors,addTags,updateCompetitors,deleteCompetitors,removeTags } from '@/services/competitor';
+import { notification } from 'antd';
 
 export default {
     namespace: 'competitors',
     state: {
       status: undefined,
-      competitorsList:[],
-      myCompetitorsList:[],
+      data: {
+          list: [],
+          pagination: {},
+      },
     },
     effects: {
         //获取竞争对手列表信息可跟关键字查询
         *getCompetitorsList({ payload }, { call, put }) {
+            console.log('xxx',payload)
             const response = yield call(getCompetitorsList, payload);
-            if (response) {
+            if(response.code === 403) {
+                const values = {
+                    list: [],
+                    pagination: {
+                        current: 1,
+                        pageSize: 10,
+                        total: 0
+                    }
+                }
                 yield put({
                     type: 'showCompetitorsList',
-                    payload: response,
+                    payload: values,
                 });
-            }else{}
+            }
+            if (response.code === 200) {
+                const values = {
+                    list: response.data.list,
+                    pagination: {
+                        current: response.data.pageNum,
+                        pageSize: response.data.pageSize,
+                        total: response.data.total
+                    }
+                }
+                yield put({
+                    type: 'showCompetitorsList',
+                    payload: values,
+                });
+            }    
         },
 
         //获取登录用户编辑的竞争对手列表信息
@@ -32,13 +58,12 @@ export default {
 
         //添加竞争对手
         *insertCompetitors({ payload }, { call, put }) {
-            const response = yield call(add, payload);
+            const response = yield call(insertCompetitors, payload);
             if (response.code === 200) {
-                yield put({
-                    type: 'saveCompetitors',
-                    payload: response,
-                });
-            } else {}
+                notification.success({
+                    message: '创建成功'
+                })
+            } 
         },
 
         //为竞争对手附加标签
@@ -91,7 +116,7 @@ export default {
       showCompetitorsList(state,action){
         return{
             ...state,
-            competitorsList:action.payload.data.list,
+            data: action.payload,
         };
       },
 
@@ -102,12 +127,7 @@ export default {
         };
       },
 
-      saveCompetitors(state,action){
-        return{
-            ...state,
-            action:response.payload,
-        };
-      },
+      
 
       saveCompetitorsTags(state,action){
         return{

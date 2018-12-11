@@ -3,7 +3,24 @@ import { getUserToken } from '@/utils/authority'
 //获取竞争对手列表信息可跟关键字查询
 export async function getCompetitorsList(params) {
     const token = getUserToken();
-    return request('/server/competitors'+params.competitorName, {
+    console.log(params);
+    if (!params) {
+        params = {
+          pageSize: 10,
+          currentPage: 1,
+          keyword: ''  
+        }
+      }
+      if (!params.pageSize) {
+        params.pageSize = 10
+      }
+      if (!params.currentPage) {
+        params.currentPage = 1
+      }
+      if (!params.keyword) {
+        params.keyword = ''
+      }
+    return request(`/server/competitors?pageSize=${params.pageSize}&pageNum=${params.currentPage}&keyword=${params.keyword}`, {
         headers: { 
             Authorization: `Bearer ${token}`, 
             method: 'GET' 
