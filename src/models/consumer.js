@@ -1,5 +1,6 @@
-import { add,customerList,customerSearch,customerDelete } from '@/services/consumer';
+import { add,update,customerList,customerSearch,customerDelete } from '@/services/consumer';
 import { bindEnterprise, adds } from '@/services/enterprise';
+import { notification } from 'antd'
 export default {
   namespace: 'consumer',
   state: {
@@ -13,12 +14,26 @@ export default {
   },
   
   effects: {
+// 添加客户
     *submit({ payload }, { call, put }) {
+      console.log(payload)
       const response = yield call(add, payload);
       if (response) {
         yield put({
-          type: 'save',
-          payload: response,
+          type: 'customerList',
+          payload: payload,
+        });
+      } else {
+      }
+    },
+
+// 编辑客户
+    *update({ payload }, { call, put }) {
+      console.log(payload,"123123123")
+      const response = yield call(update, payload);
+      if (response) {
+        yield put({
+          type: 'customerList',
         });
       } else {
       }
@@ -27,7 +42,9 @@ export default {
 
 //客户列表
     *customerList({ payload }, { call, put }) {
+      console.log(payload+".......")
       const response = yield call(customerList, payload);
+      console.log(response)
       if (response) {
         const values = {
           list: response.data.list,
@@ -45,11 +62,10 @@ export default {
       }
     },
 
-    //客户详细信息
+//客户详细信息
       *customerSearch({ payload }, { call, put }) {
       const response = yield call(customerSearch, payload);
       if (response) {
-        
         yield put({
           type: 'showSearch',
           payload: values,
@@ -59,13 +75,17 @@ export default {
       }
     },
 
-    //删除客户
+//删除客户
       *customerDelete({ payload }, { call, put }) {
+        console.log(payload)
       const response = yield call(customerDelete, payload);
       if (response) {
+        notification.success({
+          message: '删除成功'
+        })
         yield put({
-          type: 'delete',
-          payload: response,
+          type: 'customerList',
+          // payload: response,
         });
       }else{
         console.log("ysc")
