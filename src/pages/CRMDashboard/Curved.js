@@ -60,10 +60,10 @@ class Curved extends React.Component {
     }
   }
   componentDidMount(){
-    // const { dispatch } = this.props;
-    // dispatch({
-    //   type:'chart/submit',
-    // });
+    const { dispatch } = this.props;
+    dispatch({
+      type:'chart/submit',
+    });
   }
   componentWillReceiveProps(nextProps){
     this.setState({
