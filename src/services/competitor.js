@@ -68,12 +68,12 @@ export async function addTags(params) {
 //修改竞争对手信息
 export async function updateCompetitors(params) {
     const token = getUserToken();
+    console.log("参数",params);
     return request(`/server/competitors`, {
-        method: 'POST',
+        method: 'PUT',
         headers: { Authorization: `Bearer ${token}` },
         body: {
             ...params,
-            method: 'update',
         },
     });
 }

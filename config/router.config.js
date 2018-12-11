@@ -140,10 +140,15 @@ export default [
       {
         name: '竞争对手',
         icon: 'warning',
-        path: '/compete',
+        path: '/competitor',
         component: './Competitor/Competitor',
       },
-      { path: '/compete/detailed', component: './CRMCompete/Detailed' },
+      { 
+        name: 'CompetitorDetails',
+        path: '/competitor/details/:CompetitorId',
+        component: './Competitor/CompetitorDetail',
+        hideInMenu: true
+      },
 
 
 

@@ -79,24 +79,30 @@ export default {
 
         //修改竞争对手信息
         *updateCompetitors({ payload }, { call, put }) {
-            const response = yield call(add, payload);
+            const response = yield call(updateCompetitors, payload);
+            console.log("修改",payload);
             if (response.code === 200) {
+                notification.success({
+                    message: '修改成功'
+                })
                 yield put({
-                    type: 'editCompetitors',
-                    payload: response,
-                });
-            } else {}
+                    type: 'getCompetitorsList'
+                })
+            } 
         },
 
         //删除竞争对手信息(修改状态)
         *deleteCompetitors({ payload }, { call, put }) {
             const response = yield call(deleteCompetitors, payload);
+            console.log("删除",payload);
             if (response.code === 200) {
+                notification.success({
+                    message: '删除成功'
+                })
                 yield put({
-                    type: 'removeCompetitors',
-                    payload: response,
-                });
-            } else {}
+                    type: 'getCompetitorsList'
+                })
+            } 
         },
 
         //为竞争对手移除标签

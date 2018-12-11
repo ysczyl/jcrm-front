@@ -82,206 +82,70 @@ const CreateForm = Form.create()(props => {
   );
 });
 
-@Form.create()
-class UpdateForm extends PureComponent {
-  constructor(props) {
-    super(props);
+const UpdateForm = Form.create()(props => {
+  const { values, modalVisible, form, handleUpdate, handleUpdateModalVisible } = props;
+  console.log("修改ss",props);
 
-    this.state = {
-      formVals: {
-        name: props.values.name,
-        desc: props.values.desc,
-        key: props.values.key,
-        target: '0',
-        template: '0',
-        type: '1',
-        time: '',
-        frequency: 'month',
-      },
-      currentStep: 0,
-    };
-
-    this.formLayout = {
-      labelCol: { span: 7 },
-      wrapperCol: { span: 13 },
-    };
-  }
-
-  handleNext = currentStep => {
-    const { form, handleUpdate } = this.props;
-    const { formVals: oldValue } = this.state;
+  const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
+      if(fieldsValue.types === "直接竞争对手"){
+        fieldsValue.types = 1;
+      }else{
+        fieldsValue.types = 0;
+      }
       if (err) return;
-      const formVals = { ...oldValue, ...fieldsValue };
-      this.setState(
-        {
-          formVals,
-        },
-        () => {
-          if (currentStep < 2) {
-            this.forward();
-          } else {
-            handleUpdate(formVals);
-          }
-        }
-      );
+      form.resetFields();
+      handleUpdate(fieldsValue);
     });
   };
 
-  backward = () => {
-    const { currentStep } = this.state;
-    this.setState({
-      currentStep: currentStep - 1,
-    });
-  };
-
-  forward = () => {
-    const { currentStep } = this.state;
-    this.setState({
-      currentStep: currentStep + 1,
-    });
-  };
-
-  renderContent = (currentStep, formVals) => {
-    const { form } = this.props;
-    if (currentStep === 1) {
-      return [
-        <FormItem key="target" {...this.formLayout} label="监控对象">
-          {form.getFieldDecorator('target', {
-            initialValue: formVals.target,
-          })(
-            <Select style={{ width: '100%' }}>
-              <Option value="0">表一</Option>
-              <Option value="1">表二</Option>
-            </Select>
-          )}
-        </FormItem>,
-        <FormItem key="template" {...this.formLayout} label="规则模板">
-          {form.getFieldDecorator('template', {
-            initialValue: formVals.template,
-          })(
-            <Select style={{ width: '100%' }}>
-              <Option value="0">规则模板一</Option>
-              <Option value="1">规则模板二</Option>
-            </Select>
-          )}
-        </FormItem>,
-        <FormItem key="type" {...this.formLayout} label="规则类型">
-          {form.getFieldDecorator('type', {
-            initialValue: formVals.type,
-          })(
-            <RadioGroup>
-              <Radio value="0">强</Radio>
-              <Radio value="1">弱</Radio>
-            </RadioGroup>
-          )}
-        </FormItem>,
-      ];
-    }
-    if (currentStep === 2) {
-      return [
-        <FormItem key="time" {...this.formLayout} label="开始时间">
-          {form.getFieldDecorator('time', {
-            rules: [{ required: true, message: '请选择开始时间！' }],
-          })(
-            <DatePicker
-              style={{ width: '100%' }}
-              showTime
-              format="YYYY-MM-DD HH:mm:ss"
-              placeholder="选择开始时间"
-            />
-          )}
-        </FormItem>,
-        <FormItem key="frequency" {...this.formLayout} label="调度周期">
-          {form.getFieldDecorator('frequency', {
-            initialValue: formVals.frequency,
-          })(
-            <Select style={{ width: '100%' }}>
-              <Option value="month">月</Option>
-              <Option value="week">周</Option>
-            </Select>
-          )}
-        </FormItem>,
-      ];
-    }
-    return [
-      <FormItem key="name" {...this.formLayout} label="规则名称">
-        {form.getFieldDecorator('name', {
-          rules: [{ required: true, message: '请输入规则名称！' }],
-          initialValue: formVals.name,
+  return (
+    <Modal
+      destroyOnClose
+      title="编辑竞争对手"
+      visible={modalVisible}
+      onOk={okHandle}
+      onCancel={() => handleUpdateModalVisible()}
+    >
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}  style={{display:'none'}}>
+        {form.getFieldDecorator('competitorId', {
+          initialValue: values.competitorId,
+        
+        })(<Input />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="对手名称">
+        {form.getFieldDecorator('competitorName', {
+          initialValue: values.competitorName,
+          rules: [{ required: true, message: '请输入至少两个字符的名称内容！', min: 2 }],
         })(<Input placeholder="请输入" />)}
-      </FormItem>,
-      <FormItem key="desc" {...this.formLayout} label="规则描述">
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
-          initialValue: formVals.desc,
-        })(<TextArea rows={4} placeholder="请输入至少五个字符" />)}
-      </FormItem>,
-    ];
-  };
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="相关描述">
+        {form.getFieldDecorator('description', {
+          initialValue: values.description,
+          rules: [{ required: true, message: '请输入至少十个字符的相关描述！', min: 10 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="对手类型">
+        {form.getFieldDecorator('types', {
+          initialValue: values.types?'直接竞争对手':'间接竞争对手',
+          rules: [{ required: true, message: '请选择竞争对手类型！' }],
+        })(
+          <Select style={{ width: '100%'}} >
+            <Option value="0">间接竞争对手</Option>
+            <Option value="1">直接竞争对手</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="添加备注">
+        {form.getFieldDecorator('ex1', {
+          initialValue: values.ex1,
+          rules: [{ required: false, message: '备注可为空!' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+    </Modal>
+  );
+});
 
-  renderFooter = currentStep => {
-    const { handleUpdateModalVisible } = this.props;
-    if (currentStep === 1) {
-      return [
-        <Button key="back" style={{ float: 'left' }} onClick={this.backward}>
-          上一步
-        </Button>,
-        <Button key="cancel" onClick={() => handleUpdateModalVisible()}>
-          取消
-        </Button>,
-        <Button key="forward" type="primary" onClick={() => this.handleNext(currentStep)}>
-          下一步
-        </Button>,
-      ];
-    }
-    if (currentStep === 2) {
-      return [
-        <Button key="back" style={{ float: 'left' }} onClick={this.backward}>
-          上一步
-        </Button>,
-        <Button key="cancel" onClick={() => handleUpdateModalVisible()}>
-          取消
-        </Button>,
-        <Button key="submit" type="primary" onClick={() => this.handleNext(currentStep)}>
-          完成
-        </Button>,
-      ];
-    }
-    return [
-      <Button key="cancel" onClick={() => handleUpdateModalVisible()}>
-        取消
-      </Button>,
-      <Button key="forward" type="primary" onClick={() => this.handleNext(currentStep)}>
-        下一步
-      </Button>,
-    ];
-  };
-
-  render() {
-    const { updateModalVisible, handleUpdateModalVisible } = this.props;
-    const { currentStep, formVals } = this.state;
-
-    return (
-      <Modal
-        width={640}
-        bodyStyle={{ padding: '32px 40px 48px' }}
-        destroyOnClose
-        title="规则配置"
-        visible={updateModalVisible}
-        footer={this.renderFooter(currentStep)}
-        onCancel={() => handleUpdateModalVisible()}
-      >
-        <Steps style={{ marginBottom: 28 }} size="small" current={currentStep}>
-          <Step title="基本信息" />
-          <Step title="配置规则属性" />
-          <Step title="设定调度周期" />
-        </Steps>
-        {this.renderContent(currentStep, formVals)}
-      </Modal>
-    );
-  }
-}
 
 /* eslint react/no-multi-comp:0 */
 @connect(({ competitors, loading }) => ({
@@ -296,7 +160,7 @@ class CompetitorList extends PureComponent {
     expandForm: false,
     selectedRows: [],
     formValues: {},
-    stepFormValues: {},
+    updateFormValues: {},
   };
 
   columns = [
@@ -327,9 +191,9 @@ class CompetitorList extends PureComponent {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
+          <a onClick={() => this.handleUpdateModalVisible(true, record)}>编辑</a>
           <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <a href="">详细信息</a>
         </Fragment>
       ),
     },
@@ -397,7 +261,8 @@ class CompetitorList extends PureComponent {
         dispatch({
           type: 'competitors/deleteCompetitors',
           payload: {
-            key: selectedRows.map(row => row.key),
+            competitorId: selectedRows[0].competitorId,
+            status: 0,
           },
           callback: () => {
             this.setState({
@@ -447,9 +312,10 @@ class CompetitorList extends PureComponent {
   };
 
   handleUpdateModalVisible = (flag, record) => {
+    console.log("修改",record);
     this.setState({
       updateModalVisible: !!flag,
-      stepFormValues: record || {},
+      updateFormValues: record || {},
     });
   };
 
@@ -468,15 +334,12 @@ class CompetitorList extends PureComponent {
   handleUpdate = fields => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'rule/update',
+      type: 'competitors/updateCompetitors',
       payload: {
-        name: fields.name,
-        desc: fields.desc,
-        key: fields.key,
+        ...fields,
       },
     });
 
-    message.success('配置成功');
     this.handleUpdateModalVisible();
   };
 
@@ -523,10 +386,10 @@ class CompetitorList extends PureComponent {
       loading,
     } = this.props;
     console.log(this.props)
-    const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
+    const { selectedRows, modalVisible, updateModalVisible, updateFormValues } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">批量删除</Menu.Item>
+        <Menu.Item key="remove">删除</Menu.Item>
       </Menu>
     );
 
@@ -549,7 +412,6 @@ class CompetitorList extends PureComponent {
               </Button>
               {selectedRows.length > 0 && (
                 <span>
-                  <Button>批量操作</Button>
                   <Dropdown overlay={menu}>
                     <Button>
                       更多操作 <Icon type="down" />
@@ -569,11 +431,13 @@ class CompetitorList extends PureComponent {
           </div>
         </Card>
         <CreateForm {...parentMethods} modalVisible={modalVisible} />
-        {stepFormValues && Object.keys(stepFormValues).length ? (
+        {updateFormValues && Object.keys(updateFormValues).length ? (
           <UpdateForm
-            {...updateMethods}
-            updateModalVisible={updateModalVisible}
-            values={stepFormValues}
+            {...parentMethods}
+            modalVisible={updateModalVisible}
+            values={updateFormValues}
+            handleUpdateModalVisible={this.handleUpdateModalVisible}
+            handleUpdate={this.handleUpdate}
           />
         ) : null}
       </PageHeaderWrapper>
