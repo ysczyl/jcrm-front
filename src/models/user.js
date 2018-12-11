@@ -1,4 +1,5 @@
-import { updateUser, query as queryUsers, queryCurrent } from '@/services/user';
+import { updateUser, query as queryUsers, queryCurrent, addUser } from '@/services/user';
+import { notification } from 'antd'
 export default {
   namespace: 'user',
 
@@ -12,13 +13,24 @@ export default {
   },
 
   effects: {
-    *fetch(_, { call, put }) {
-      const response = yield call(queryUsers);
+    *fetch(params, { call, put }) {
+      console.log('fetch:', params);
+      const response = yield call(queryUsers, params);
       console.log(response);
-      yield put({
-        type: 'save',
-        payload: response.data,
-      });
+      if (response.code === 200) {
+        const values = {
+          list: response.data.list,
+          pagination: {
+            current: response.data.pageNum,
+            pageSize: response.data.pageSize,
+            total: response.data.total
+          }
+        }
+        yield put({
+          type: 'save',
+          payload: values,
+        }); 
+      }
     },
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
@@ -38,13 +50,23 @@ export default {
         });
       }
     },
+    *add(payload, { call, put }) {
+      const response = yield call(addUser, payload.payload);
+      console.log(response);
+      if (response.code === 200) {
+        notification.success({
+          message: `创建成功`
+        })
+      }
+    }
   },
 
   reducers: {
     save(state, action) {
+      console.log('save', state, action)
       return {
         ...state,
-        list: action.payload,
+        data: action.payload
       };
     },
     saveCurrentUser(state, action) {

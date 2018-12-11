@@ -70,8 +70,14 @@ export default [
       {
         name: '任务',
         icon: 'warning',
-        path: '/exception/task',
-        component: './Task/Task',
+        path: '/task',
+        component: './Task/Task'
+      },
+      {
+        name: 'TaskDetails',
+        path: '/task/details/:taskId',
+        component: './Task/TaskProfile',
+        hideInMenu: true
       },
       {
         //部门

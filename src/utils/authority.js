@@ -1,4 +1,5 @@
 import { func } from 'prop-types';
+// import { Session } from 'inspector';
 
 // use localStorage to store the authority info, which might be sent from server in actual project.
 export function getAuthority(str) {
@@ -24,9 +25,9 @@ export function setAuthority(authority) {
 }
 
 export function setUserToken(token) {
-  return localStorage.setItem('token', token);
+  return sessionStorage.setItem('token', token);
 }
 
 export function getUserToken() {
-  return localStorage.getItem('token');
+  return sessionStorage.getItem('token');
 }

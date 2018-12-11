@@ -35,8 +35,8 @@ const getValue = obj =>
   Object.keys(obj)
     .map(key => obj[key])
     .join(',');
-const statusMap = ['default', 'processing', 'success', 'error'];
-const status = ['已完成', '未完成', '逾期任务', '重复任务'];
+const statusMap = ['success','error', 'default', 'processing'];
+const status = ['激活', '账号封锁'];
 
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props;
@@ -47,16 +47,13 @@ const CreateForm = Form.create()(props => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       form.resetFields();
-      const rangeTimeValue = fieldsValue['range-time-picker'];
       const values = {
-        ...fieldsValue,
-        'range-time-picker': [
-          rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
-          rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss'),
+        data: [
+          {...fieldsValue}
         ],
       };
       console.log('Received values of form: ', values);
-      handleAdd(fieldsValue);
+      handleAdd(values);
     });
   };
   return (
@@ -68,69 +65,16 @@ const CreateForm = Form.create()(props => {
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="Title">
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="Email">
+        {form.getFieldDecorator('mail', {
+          rules: [{ required: true, message: '请输入至少五个字符的用户名！', min: 5 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
 
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
-        {form.getFieldDecorator('holders', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
-        })(
-        <Select style={{width: '200px'}} mode="multiple" placeholder="Please select holder">
-          <Option value="id">user</Option>
-          <Option value="id2">user2</Option>
-          <Option value="id3">user3</Option>
-        </Select>)}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="优先级">
-        {form.getFieldDecorator('priority', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
-        })(
-        <Select style={{width: '200px'}} placeholder="Please select holder">
-          <Option value="id">user</Option>
-          <Option value="id2">user2</Option>
-          <Option value="id3">user3</Option>
-        </Select>)}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="相关商业机会">
-        {form.getFieldDecorator('businessOppId', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
-        })(
-        <Select style={{width: '200px'}} placeholder="Please select holder">
-          <Option value="id">user</Option>
-          <Option value="id2">user2</Option>
-          <Option value="id3">user3</Option>
-        </Select>)}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="相关潜在客户">
-        {form.getFieldDecorator('businessOppId', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
-        })(
-        <Select style={{width: '200px'}} placeholder="Please select holder">
-          <Option value="id">user</Option>
-          <Option value="id2">user2</Option>
-          <Option value="id3">user3</Option>
-        </Select>)}
-      </FormItem>
-      <FormItem
-          label="期限" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}
-        >
-          {form.getFieldDecorator('range-time-picker', rangeConfig)(
-            <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-          )}
-      </FormItem>
-      <FormItem
-          label="描述" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}
-        >
-          {form.getFieldDecorator('range-time-picker', rangeConfig)(
-            <TextArea
-            style={{ minHeight: 32 }}
-            placeholder="description"
-            rows={4}
-          />
-          )}
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="密码">
+        {form.getFieldDecorator('pass', {
+          rules: [{ required: true, message: '请输入至少五个字符的密码！', min: 5 }],
+        })(<Input type="password" placeholder="请输入"/>)}
       </FormItem>
     </Modal>
   );
@@ -259,9 +203,9 @@ class UpdateForm extends PureComponent {
       ];
     }
     return [
-      <FormItem key="name" {...this.formLayout} label="规则名称">
+      <FormItem key="name" {...this.formLayout} label="用户名称">
         {form.getFieldDecorator('name', {
-          rules: [{ required: true, message: '请输入规则名称！' }],
+          rules: [{ required: true, message: '请输入用户名称！' }],
           initialValue: formVals.name,
         })(<Input placeholder="请输入" />)}
       </FormItem>,
@@ -355,25 +299,29 @@ class UserManager extends PureComponent {
 
   columns = [
     {
-      title: '规则名称',
-      dataIndex: 'name',
+      title: 'ID',
+      dataIndex: 'uid',
+      key: 'uid'
     },
     {
-      title: '描述',
-      dataIndex: 'desc',
+      title: '用户名称',
+      dataIndex: 'username',
+      key: 'username'
     },
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
-      sorter: true,
-      align: 'right',
-      render: val => `${val} 万`,
-      // mark to display a total number
-      needTotal: true,
+      title: '签名',
+      dataIndex: 'signature',
+      key: 'signature'
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email'
     },
     {
       title: '类型',
-      dataIndex: 'status',
+      dataIndex: 'isLock',
+      key: 'isLock',
       filters: [
         {
           text: status[0],
@@ -397,8 +345,8 @@ class UserManager extends PureComponent {
       },
     },
     {
-      title: '上次调度时间',
-      dataIndex: 'updatedAt',
+      title: '创建时间',
+      dataIndex: 'ctime',
       sorter: true,
       render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
     },
@@ -406,9 +354,9 @@ class UserManager extends PureComponent {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
+          <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
           <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <a href="">删除</a>
         </Fragment>
       ),
     },
@@ -503,7 +451,6 @@ class UserManager extends PureComponent {
 
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-
       const values = {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
@@ -512,7 +459,7 @@ class UserManager extends PureComponent {
       this.setState({
         formValues: values,
       });
-
+      console.log('query user form values:', values)
       dispatch({
         type: 'user/fetch',
         payload: values,
@@ -535,14 +482,13 @@ class UserManager extends PureComponent {
 
   handleAdd = fields => {
     const { dispatch } = this.props;
+    console.log('fields', fields)
     dispatch({
       type: 'user/add',
-      payload: {
-        desc: fields.desc,
-      },
+      payload: fields,
     });
 
-    message.success('添加成功');
+    // message.success('添加成功');
     this.handleModalVisible();
   };
 
@@ -569,8 +515,8 @@ class UserManager extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="规则名称">
-              {getFieldDecorator('name')(<Input placeholder="请输入" />)}
+            <FormItem label="用户名称">
+              {getFieldDecorator('keyword')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
@@ -702,7 +648,7 @@ class UserManager extends PureComponent {
       handleUpdate: this.handleUpdate,
     };
     return (
-      <PageHeaderWrapper title="查询表格">
+      <PageHeaderWrapper title="用户管理">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>
