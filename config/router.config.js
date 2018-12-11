@@ -41,7 +41,7 @@ export default [
         path: '/form/basic-form',
         icon: 'form',
         name: '客户',
-        component: './CRMForms/form',
+        component: './Consumer/ConsumerList',
       },
       { path: '/form/advanced-form', component: './CRMForms/BasicForm' },
       // 联系人
