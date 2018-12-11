@@ -6,6 +6,10 @@ export default {
     status: undefined,
     list:[],
     customerSearch:[],
+    data: {
+      list: [],
+      pagination: {},
+    },
   },
   
   effects: {
@@ -25,9 +29,17 @@ export default {
     *customerList({ payload }, { call, put }) {
       const response = yield call(customerList, payload);
       if (response) {
+        const values = {
+          list: response.data.list,
+          pagination: {
+            current: response.data.pageNum,
+            pageSize: response.data.pageSize,
+            total: response.data.total
+          }
+        }
         yield put({
-          type: 'show',
-          payload: response,
+          type: 'save',
+          payload: values,
         });
       }else{
       }
@@ -37,9 +49,10 @@ export default {
       *customerSearch({ payload }, { call, put }) {
       const response = yield call(customerSearch, payload);
       if (response) {
+        
         yield put({
           type: 'showSearch',
-          payload: response,
+          payload: values,
         });
       }else{
         
@@ -74,10 +87,11 @@ export default {
       };
     },
     save(state,action){
-      return{
+      console.log('save', state, action)
+      return {
         ...state,
-        action:response.payload,
-      }
+        data: action.payload
+      };
     },
     delete(state,action){
       return{

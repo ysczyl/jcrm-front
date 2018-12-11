@@ -52,13 +52,13 @@ class Forms extends React.Component {
             render: text => <Link to={{pathname:"/form/advanced-form",state:{cid:text}}}>{text}</Link>,
           },{
             title: '客户名',
-            dataIndex: 'cid',
+            dataIndex: 'consumerName',
             key: 'consumerName',
             render: text => <Link to={{pathname:"/form/advanced-form",state:{cid:text}}}>{text}</Link>,
           }, {
-            title: '电话',
-            dataIndex: 'age',
-            key: 'age',
+            title: '客户关键词',
+            dataIndex: 'description',
+            key: 'description',
           }, {
             title: '网址',
             dataIndex: 'website',
