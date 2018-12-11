@@ -77,12 +77,12 @@ const CreateForm = Form.create()(props => {
     >
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
         {form.getFieldDecorator('consumerName', {
-          rules: [{ required: true, message: '请输入', min: 5 }],
+          rules: [{ required: true, message: '请输入', min: 2 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="类型">
         {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: '请输入', min: 5 }],
+          rules: [{ required: true, message: '请输入', min: 1 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="网址">
@@ -97,22 +97,18 @@ const CreateForm = Form.create()(props => {
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="客户国家/地区">
         {form.getFieldDecorator('country', {
-          rules: [{ required: true, message: '请输入', min: 5 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="客户州/省">
         {form.getFieldDecorator('province', {
-          rules: [{ required: true, message: '请输入', min: 5 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="客户城市">
         {form.getFieldDecorator('city', {
-          rules: [{ required: true, message: '请输入', min: 5 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="客户街道">
         {form.getFieldDecorator('street', {
-          rules: [{ required: true, message: '请输入', min: 5 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
     </Modal>

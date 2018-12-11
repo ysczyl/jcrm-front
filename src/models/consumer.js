@@ -21,7 +21,7 @@ export default {
       if (response) {
         yield put({
           type: 'customerList',
-          payload: payload,
+          // payload: payload,
         });
       } else {
       }
