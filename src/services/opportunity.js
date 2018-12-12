@@ -1,9 +1,9 @@
 import request from '@/utils/request';
 import { getUserToken } from '@/utils/authority'
 //获取商业机会列表信息可跟关键字查询
-export async function getOpportunityList() {
+export async function getOpportunityList(params) {
     const token = getUserToken();
-    return request('/server/opportunity/searchOpp', {
+    return request('/server/opportunity/searchOpp?keyword='+params.name, {
         headers: { 
             Authorization: `Bearer ${token}`, 
             method: 'GET' 
@@ -141,11 +141,10 @@ export async function insertApplication(params) {
 export async function updateOpportunity(params) {
     const token = getUserToken();
     return request(`/server/opportunity`, {
-        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        method: 'PUT',
         body: {
             ...params,
-            method: 'update',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }
@@ -153,25 +152,39 @@ export async function updateOpportunity(params) {
 //商业机会所有者删除商业机会信息(修改状态)
 export async function deleteOpportunity(params) {
     const token = getUserToken();
-    return request(`/server/opportunity/delete`, {
-        method: 'POST',
+    if(!params){
+        params = {
+            "businessOppId": 0,
+            "isDeleted": 0
+        }
+    }
+    if(!params.businessOppId){
+        params = {
+            "businessOppId": 0,
+            "isDeleted": 0
+        }
+    }
+    else{
+        params.isDeleted = 0
+    }
+    return request(`/server/opportunity/delete?isDeleted=${params.isDeleted}&businessOppId=${params.businessOppId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        method: 'PUT',
         body: {
             ...params,
-            method: 'update',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }
 
 //商业机会跟进者修改商业机会信息
 export async function updateOpportunityPartial(params) {
+    console.log(params.oppName)
     const token = getUserToken();
     return request(`/server/opportunity/partial`, {
-        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        method: 'PUT',
         body: {
             ...params,
-            method: 'update',
-            headers: { Authorization: `Bearer ${token}` },
         },
     });
 }

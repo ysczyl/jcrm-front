@@ -3,6 +3,7 @@ import { getOpportunityList,getSourceList,getStageList,getReasonList,getOpportun
 export default {
   namespace: 'opportunity',
   state: {
+    delete:true,
     status: undefined,
     opportunityList:[],
     sourceList:[],
@@ -14,17 +15,45 @@ export default {
     recordList:[],
     chartList:[],
     list:[],
+    data: {
+        list: [],
+        pagination: {},
+      },
   },
   effects: {
     //获取商业机会列表信息可跟关键字查询
     *getOpportunityList({ payload }, { call, put }) {
         const response = yield call(getOpportunityList, payload);
-        if (response) {
+        console.log(response)
+        if (response.code == 200) {
+            const values = {
+                list: response.data.list,
+                pagination: {
+                  current: response.data.pageNum,
+                  pageSize: response.data.pageSize,
+                  total: response.data.total
+                }
+              }
             yield put({
                 type: 'showOpportunityList',
-                payload: response,
+                payload: values,
             });
-        }else{}
+        }
+        if(response.code === 403) {
+            const values = {
+                list: [],
+                pagination: {
+                    current: 1,
+                    pageSize: 10,
+                    total: 0
+                }
+            }
+            yield put({
+                type: 'showOpportunityList',
+                payload: values,
+            });
+        }
+        else{}
     },
 
     //获取商业机会市场来源列表信息(用于新建商业机会)
@@ -168,20 +197,20 @@ export default {
 
     //商业机会所有者修改商业机会信息
     *updateOpportunity({ payload }, { call, put }) {
-        const response = yield call(add, payload);
+        const response = yield call(updateOpportunity, payload);
         if (response.code === 200) {
             yield put({
-                type: 'editOpportunity',
+                type: 'editOpportunity',//********************************************************************** */
                 payload: response,
             });
         } else {
-            response.status = false;
+           
         }
     },
 
     //商业机会所有者删除商业机会信息(修改状态)
     *deleteOpportunity({ payload }, { call, put }) {
-        const response = yield call(add, payload);
+        const response = yield call(deleteOpportunity, payload);
         if (response.code === 200) {
             yield put({
                 type: 'removeOpportunity',
@@ -194,14 +223,17 @@ export default {
 
     //商业机会跟进者修改商业机会信息
     *updateOpportunityPartial({ payload }, { call, put }) {
-        const response = yield call(add, payload);
+        const response = yield call(updateOpportunityPartial, payload);
         if (response.code === 200) {
             yield put({
                 type: 'editOpportunityPartial',
                 payload: response,
             });
-        } else {
-            response.status = false;
+        } 
+        else{
+            yield put({
+                type: 'no',
+            });
         }
     },
 
@@ -262,7 +294,7 @@ export default {
     showOpportunityList(state,action){
         return{
             ...state,
-            opportunityList:action.payload.data.list,
+            data:action.payload,
         };
     },
 
@@ -340,14 +372,12 @@ export default {
     editOpportunity(state){
         return{
             ...state,
-            action:response.payload,
         };
     },
 
     removeOpportunity(state){
         return{
             ...state,
-            action:response.payload,
         };
     },
 
@@ -355,6 +385,13 @@ export default {
         return{
             ...state,
             action:response.payload,
+        };
+    },
+
+    no(state,action){
+        return{
+            ...state,
+            delete:false,
         };
     },
 

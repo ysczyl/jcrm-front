@@ -9,48 +9,26 @@ const deadline = "";
 const roiAnalysisCompleted = 0;
 const InputGroup = Input.Group;
 const Option = Select.Option;
-const budget = 0;
-const discovery = 0;
-const roi = 0;
-var oppSourceId = 1;
-var oppStageId = 1; 
 function Budget(e) {
     console.log(`checked = ${e.target.checked}`);
-    // if(e.target.checked){
-    //   budget = 1
-    // }else{
-    //   budget = 0
-    // }
   }
 function Discovery(e) {
     console.log(`checked = ${e.target.checked}`);
-    // if(e.target.checked){
-    //   discovery = 1
-    // }else{
-    //   discovery = 0
-    // }
   }
 function ROI(e) {
     console.log(`checked = ${e.target.checked}`);
-    // if(e.target.checked){
-    //   roi = 1
-    // }else{
-    //   roi = 0
-    // }
   }
 function data(date, dateString) {
-    // deadline = data._d;
+    deadline = data._d;
   }
 const ButtonGroup = Button.Group;
 const { TextArea } = Input;
 @connect(({ opportunity, loading }) => ({
   opportunity,
-  submitting: loading.effects['opportunity/customerList'],
-  submitting: loading.effects['opportunity/getSourceList'],
-  submitting: loading.effects['opportunity/getStageList'],
-  submitting: loading.effects['opportunity/insertOpportunity'],
+  projectLoading: loading.effects['opportunity/getOpportunityList'],
+  submitting: loading.effects['opportunity/updateOpportunity'],
 }))
-class Build extends React.Component {
+class Change extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -61,6 +39,9 @@ class Build extends React.Component {
       visible: false,
       visibles: false,
       sourcesVisible:false,
+      importantLevel :"",
+      oppSourceId : this.props.cz.oppSourceId,
+      oppStageId : this.props.cz.oppStageId,
 };
 }
  //新建触发事件
@@ -68,6 +49,7 @@ class Build extends React.Component {
     this.setState({
       visible: true,
     });
+    console.log(this.props.cz)
   }
   //新建客户触发事件
   showNewCustomer = () => {
@@ -81,40 +63,45 @@ class Build extends React.Component {
       sourcesVisible: true,
     });
   }
+  importantLevel = (e) =>{
+    // console.log(document.getElementById('oppSourceId').innerHTML)
+    this.setState({oppSourceId:e},()=>{console.log(this.state.importantLevel)})
+  }
   Change = (e) =>{
     // console.log(document.getElementById('oppSourceId').innerHTML)
-    oppSourceId = e;
+    this.setState({oppSourceId:e},()=>{console.log(this.state.oppSourceId)})
   }
   Changes = (e) =>{
     // console.log(document.getElementById('oppStageId').innerHTML)
-    oppStageId = e;
+    this.setState({oppSourceId:e},()=>{console.log(this.state.oppStageId)})
   }
   handleOk = (e) => {
   	const values = {
       "oppName": document.getElementById('oppName').value,
       "deadline": deadline,
       "executor":30,
-      "possibility": document.getElementById('possibility').value,
+      "possibility":10,
       "nextStep": document.getElementById('nextStep').value,
       "roiAnalysisCompleted":0,
       "oppEx1": document.getElementById('oppEx1').value,
       "oppDescription": document.getElementById('oppDescription').value,
-      "importantLevel": document.getElementById('importantLevel').value,
-      "cid": document.getElementById('cid').value,
+      "importantLevel": this.state.importantLevel,
       "accountMoney": document.getElementById('accountMoney').value,
-      "oppSourceId": oppSourceId,
-      "oppStageId": oppStageId,
-      "cid": document.getElementById('cid').value,
+      "oppSourceId": this.state.oppSourceId,
+      "oppStageId": this.state.oppStageId,
       "isCompleted":0,
       "budgetConfirmed":0,
-		}
+      "oppLossReasonId":1,
+      "businessOppId":this.props.cz.businessOppId,
+    }
+    console.log(values)
     console.log(e);
     this.setState({
       visible: false,
     });
     const { dispatch } = this.props;
     dispatch({
-      type: 'opportunity/insertOpportunity',
+      type: 'opportunity/updateOpportunity',
       payload: {
         ...values,
       },
@@ -152,44 +139,7 @@ handleCancels = (e) => {
       sourcesVisible: false,
     });
   }
-  flags=(e)=>{
-    if(this.state.listC.length != 0){
-      this.setState({
-        flag:true,
-      },()=>{console.log(this.state.flag)});
-    }
-  }
-  jiekou=()=>{
-    const {dispatch} = this.props;
-    //调取客户列表数据
-      dispatch({
-    type: 'opportunity/customerList',
-  });
-  //调取主要市场活动源列表数据
-      dispatch({
-        type: 'opportunity/getSourceList',
-      });
-  //调取阶段列表
-      dispatch({
-        type: 'opportunity/getStageList',
-      });
-  }
-  componentDidMount(){
-    this.flags();
-    this.jiekou();
-}
-  componentWillReceiveProps(nextProps){
-    this.setState({
-      //客户列表
-      listC: nextProps.opportunity.list,
-      //主要市场活动源列表
-      sourceList: nextProps.opportunity.sourceList,
-      //业务机会
-      getStageList:nextProps.opportunity.stageList,
-  });
-     this.flags();
-     console.log(this.props)
-  }
+
 
 
   render() {
@@ -203,17 +153,17 @@ handleCancels = (e) => {
     );
     //阶段
     let getStageList = this.state.getStageList.map((item,index)=>
-    <Option key={index} value={this.state.flag?item.oppStageId:0}>{this.state.flag?item.stageName:"ysc"}</Option>
+    <Option key={index} value={index}>{this.state.flag?item.stageName:"ysc"}</Option>
     );
     
     return (
-      <div>
-              <Button icon="plus" type="primary" onClick={this.showModal}>
-                新建
-              </Button>
+      <div style={{float:'left'}}>
+              <a onClick={this.showModal}>
+                修改
+              </a>
 	           <Modal
 	          width='950px'
-	          title="新建商业机会"
+	          title="修改商业机会"
 	          visible={this.state.visible}
 	          onOk={this.handleOk}
 	          onCancel={this.handleCancel}
@@ -225,34 +175,18 @@ handleCancels = (e) => {
 	        			<span className={styles.InputSpanX}>*</span>
 	        			<span>业务机会名</span>
 	        		</div>
-	        		<Input id='oppName' className={styles.InputS} />
+	        		<Input id='oppName' className={styles.InputS} defaultValue={this.props.cz.oppName}/>
 	        		<div className={styles.kehuSpan}>
 	        			<span>业务机会所有人</span>
 	        		</div>
-	        		<span>john</span>
-	        	</div>
-	            <div className={styles.leixinBox}>
-	        		<div className={styles.InputBeforeBox}>
-	        			<span style={{marginLeft:24}}>客户名</span>
-	        		</div>
-                    <InputGroup compact style={{float:'left',width:'30%'}}>
-                        <Select className={styles.InputS} id='cid' defaultValue="-2">
-                            <Option value="-2">--无--</Option>
-                            <Option value="-1" onClick={this.showNewCustomer}>创建客户</Option>
-                            {CustomerMap}
-                        </Select>
-                    </InputGroup>
-	        		<div className={styles.kehuSpan}>
-	        			<span>结束日期</span>
-	        		</div>
-	        		<DatePicker onChange={data} id='mum' className={styles.MGS}  placeholder="结束日期"/>
+	        		<span>{this.props.cz.username}</span>
 	        	</div>
 	        	<div className={styles.leixinBox}>
 	        		<div className={styles.InputBeforeBox}>
 	        			<span className={styles.SpanL}>类型</span>
 	        		</div>
 	        		<InputGroup compact>
-                        <Select className={styles.InputS} id='phone' defaultValue="Option1">
+                        <Select className={styles.InputS} id='sbs' defaultValue="Option1">
                             <Option value="Option1">--无--</Option>
                             <Option value="Option2">Existing Business</Option>
                             <Option value="Option3">Existing Business</Option>
@@ -262,7 +196,7 @@ handleCancels = (e) => {
 	        			<span className={styles.SpanL}>重要等级</span>
 	        		</div>
 	        		<InputGroup compact>
-                        <Select className={styles.InputS} id='importantLevel' defaultValue="1">
+                        <Select className={styles.InputS} id='importantLevel' defaultValue={this.props.cz.importantLevel} onChange={this.importantLevel.bind(this)}>
                             <Option value="1">1</Option>
                             <Option value="2">2</Option>
                             <Option value="3">3</Option>
@@ -274,8 +208,8 @@ handleCancels = (e) => {
 	        			<span>阶段</span>
 	        		</div>
                     <InputGroup compact>
-                        <Select className={styles.InputS} style={{marginLeft:-30}} id='oppSourceId' defaultValue="-1" onChange={this.Change.bind(this)}>
-                            <Option value="-1">--无--</Option>
+                        <Select className={styles.InputS} style={{marginLeft:-30}} id='oppStageId' defaultValue={this.props.cz.oppStageId} onChange={this.Changes.bind(this)}>
+                            <Option value="Option1">--无--</Option>
                             {getStageList}
                         </Select>
                     </InputGroup><br />
@@ -285,15 +219,15 @@ handleCancels = (e) => {
 	        			<span className={styles.SpanL}>主要市场活动源</span>
 	        		</div>
               <InputGroup compact style={{float:'left',width:'30%'}}>
-                        <Select className={styles.InputS} id='oppStageId' onChange={this.Changes.bind(this)}>
+                        <Select className={styles.InputS} id='oppSourceId' defaultValue={this.props.cz.oppSourceId} onChange={this.Change.bind(this)}>
                             <Option value="-1" onClick={this.showSourceModal}>新建市场来源</Option>
                             {getSourceListMap}
                         </Select>
                     </InputGroup>
 	        		<div className={styles.kehuSpan}>
-	        			<span>可能性</span>
+	        			<span>可能性(%)</span>
 	        		</div>
-	        		<Input id='possibility' className={styles.MGS} />
+	        		<Input id='possibility' className={styles.MGS} defaultValue={this.props.cz.possibility}/>
 	        	</div>
                     <Checkbox style={{marginLeft:24}} onChange={Budget}>Budget Confirmed</Checkbox><br />
                     <Checkbox style={{marginLeft:24}} onChange={Discovery}>Discovery Completed</Checkbox><br />
@@ -303,19 +237,19 @@ handleCancels = (e) => {
 	        		<span>其他信息</span><br />
 	        		<div>
 	        			<span>下一步</span><br />
-	        			<Input id='nextStep' className={styles.Inputbox} />
+	        			<Input id='nextStep' className={styles.Inputbox} defaultValue={this.props.cz.nextStep} />
 	        		</div>
               <div>
 	        			<span>钱</span><br />
-	        			<Input id='accountMoney' className={styles.Inputbox} />
+	        			<Input id='accountMoney' className={styles.Inputbox} defaultValue={this.props.cz.accountMoney}  />
 	        		</div>
 	        		<div>
 	        		<span>备注</span><br />
-	        		<Input id='oppEx1' className={styles.Inputbox} />
+	        		<Input id='oppEx1' className={styles.Inputbox} defaultValue={this.props.cz.ex1} />
 	        		</div>
 	        		<div className={styles.Inputbox}>
 	        		<span>描述</span><br />
-	        		<TextArea autosize={{ minRows: 2, maxRows: 6 }} id='oppDescription' className={styles.Inputbox} />
+	        		<TextArea autosize={{ minRows: 2, maxRows: 6 }} id='oppDescription' className={styles.Inputbox} defaultValue={this.props.cz.description}/>
 	        		</div>
 	        	    <div className={styles.Inputbox}>
 	        		</div>
@@ -341,4 +275,4 @@ handleCancels = (e) => {
   }
 }
 
-export default Build;
+export default Change;

@@ -49,7 +49,7 @@ export default [
         path: '/list/table-list',
         icon: 'table',
         name: '联系人',
-        component: './Contact/ContactList',
+        component: './Contacts/ContactsList',
       },
       { path: '/list/basic-list', component: './CRMList/BasicList' },
       {
@@ -62,11 +62,11 @@ export default [
       {
         name: '业务机会',
         icon: 'check-circle-o',
-        path: '/result/success',
-        component: './CRMResult/Success',
+        path: '/business/Business',
+        component: './business/Business',
         },
           // 业务机会
-          { path: '/result/fail', component: './CRMResult/Error' },
+          { path: '/business/BusinessDetail', component: './business/BusinessDetail' },
       {
         name: '任务',
         icon: 'warning',
