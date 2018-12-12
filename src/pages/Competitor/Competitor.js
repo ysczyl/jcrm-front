@@ -23,7 +23,7 @@ import {
 } from 'antd';
 import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-
+import Link from 'umi/link'
 import styles from './Competitor.less';
 
 const FormItem = Form.Item;
@@ -193,7 +193,7 @@ class CompetitorList extends PureComponent {
         <Fragment>
           <a onClick={() => this.handleUpdateModalVisible(true, record)}>编辑</a>
           <Divider type="vertical" />
-          <a href="">详细信息</a>
+          <Link to={{pathname:"/competitor/details", info:{record} }}>详细信息</Link>
         </Fragment>
       ),
     },

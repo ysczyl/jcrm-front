@@ -145,7 +145,7 @@ export default [
       },
       { 
         name: 'CompetitorDetails',
-        path: '/competitor/details/:CompetitorId',
+        path: '/competitor/details',
         component: './Competitor/CompetitorDetail',
         hideInMenu: true
       },

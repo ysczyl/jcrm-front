@@ -13,7 +13,6 @@ export default {
     effects: {
         //获取竞争对手列表信息可跟关键字查询
         *getCompetitorsList({ payload }, { call, put }) {
-            console.log('xxx',payload)
             const response = yield call(getCompetitorsList, payload);
             if(response.code === 403) {
                 const values = {

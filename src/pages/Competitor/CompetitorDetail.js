@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Debounce from 'lodash-decorators/debounce';
 import Bind from 'lodash-decorators/bind';
 import { connect } from 'dva';
+import moment from 'moment';
 import {
   Button,
   Menu,
@@ -30,41 +31,16 @@ const getWindowWidth = () => window.innerWidth || document.documentElement.clien
 
 
 
-const action = (
-  <Fragment>
-    <ButtonGroup>
-      <Button>操作</Button>
-      <Button>操作</Button>
-    </ButtonGroup>
-    <Button type="primary">主操作</Button>
-  </Fragment>
-);
+// const action = (
+//   <Fragment>
+//     <ButtonGroup>
+//       <Button>操作</Button>
+//       <Button>操作</Button>
+//     </ButtonGroup>
+//     <Button type="primary">主操作</Button>
+//   </Fragment>
+// );
 
-const extra = (
-  <Row>
-    <Col xs={24} sm={12}>
-      <div className={styles.textSecondary}>状态</div>
-      <div className={styles.heading}>待审</div>
-    </Col>
-    <Col xs={24} sm={12}>
-      <div className={styles.textSecondary}>订单金额</div>
-      <div className={styles.heading}>¥ 568.08</div>
-    </Col>
-  </Row>
-);
-
-const description = (
-  <DescriptionList className={styles.headerList} size="small" col="2">
-    <Description term="创建人">曲丽丽</Description>
-    <Description term="订购产品">XX 服务</Description>
-    <Description term="创建时间">2017-07-07</Description>
-    <Description term="关联单据">
-      <a href="">12421</a>
-    </Description>
-    <Description term="生效日期">2017-07-07 ~ 2017-08-08</Description>
-    <Description term="备注">请于两个工作日内确认</Description>
-  </DescriptionList>
-);
 
 const tabList = [
   {
@@ -173,14 +149,18 @@ const columns = [
   profile,
   loading: loading.effects['profile/fetchAdvanced'],
 }))
-class AdvancedProfile extends Component {
+
+class CompetitorDetail extends Component {
   state = {
     operationkey: 'tab1',
     stepDirection: 'horizontal',
+    detail:this.props.location.info.record,
   };
-
+  
   componentDidMount() {
+    console.log(this.state.detail)
     const { dispatch } = this.props;
+    console.log("信息",this.state.detail);
     dispatch({
       type: 'profile/fetchAdvanced',
     });
@@ -215,6 +195,29 @@ class AdvancedProfile extends Component {
   }
 
   render() {
+
+
+    const description = (
+      <DescriptionList className={styles.headerList} size="small" col="2">
+        <Description term="创建人员">{ this.state.detail.username }</Description>
+        <Description term="创建时间">{moment(this.state.detail.ctime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+        <Description term="对手类型">
+        {this.state.detail.types?'直接竞争对手':'间接竞争对手'}
+        </Description>
+        <Description term="修改时间">{moment(this.state.detail.utime).format('YYYY-MM-DD HH:mm:ss')}</Description>
+        <Description term="相关备注">{ this.state.detail.ex1 }</Description>
+      </DescriptionList>
+    );
+    
+    const extra = (
+      <Row>
+        <Col xs={24} sm={6}>
+          <div className={styles.textSecondary}>对手名称</div>
+          <div className={styles.heading} >{ this.state.detail.competitorName }</div>
+        </Col>
+      </Row>
+    );
+
     const { stepDirection, operationkey } = this.state;
     const { profile, loading } = this.props;
     const { advancedOperation1, advancedOperation2, advancedOperation3 } = profile;
@@ -244,14 +247,14 @@ class AdvancedProfile extends Component {
         />
       ),
     };
-
+  
     return (
       <PageHeaderWrapper
-        title="单号：234231029431"
+        title={<span>单号：{this.state.detail.competitorId }</span>}
         logo={
           <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" />
         }
-        action={action}
+        //action={action}
         content={description}
         extraContent={extra}
         tabList={tabList}

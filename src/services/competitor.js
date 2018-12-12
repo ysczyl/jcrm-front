@@ -3,7 +3,6 @@ import { getUserToken } from '@/utils/authority'
 //获取竞争对手列表信息可跟关键字查询
 export async function getCompetitorsList(params) {
     const token = getUserToken();
-    console.log(params);
     if (!params) {
         params = {
           pageSize: 10,
