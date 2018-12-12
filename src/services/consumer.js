@@ -22,7 +22,11 @@ export async function seach() {
 
 export async function customerList(params) {
   const token = getUserToken();
-  return request('/server/api/consumer/listOfficial', {
+  console.log(params)
+  if(!params){
+    params = ""
+  }
+  return request(`/server/api/consumer/listOfficial?keyword=${params}`, {
     headers: { Authorization: `Bearer ${token}`, method: 'GET' },
   });
 }
@@ -62,6 +66,19 @@ export async function add(params) {
       body: {
         ...params,
         method: 'post',
+      },
+  });
+}
+
+// 编辑用户
+export async function update(params) {
+  console.log(params,"........112")
+  const token = getUserToken();
+  return request('/server/api/consumer', {
+    method: 'PUT',
+    headers: {   Authorization: `Bearer ${token}` },
+      body: {
+        ...params,
       },
   });
 }
