@@ -49,7 +49,7 @@ export default [
         path: '/list/table-list',
         icon: 'table',
         name: '联系人',
-        component: './CRMList/TableList',
+        component: './Contact/ContactList',
       },
       { path: '/list/basic-list', component: './CRMList/BasicList' },
       {

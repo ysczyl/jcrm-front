@@ -24,7 +24,7 @@ import {
 import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
-import styles from './ConsumerList.less';
+import styles from './ContactsList.less';
 
 const FormItem = Form.Item;
 const { Step } = Steps;
@@ -212,12 +212,12 @@ const UpdateForm = Form.create()(props => {
 });
 
 /* eslint react/no-multi-comp:0 */
-@connect(({ consumer, loading }) => ({
-  consumer,
-  projectLoading: loading.effects['consumer/customerList'],
+@connect(({ contacts, loading }) => ({
+  contacts,
+  projectLoading: loading.effects['contacts/contactsList'],
 }))
 @Form.create()
-class ConsumerList extends PureComponent {
+class ContactsList extends PureComponent {
   state = {
     modalVisible: false,
     updateModalVisible: false,
@@ -232,19 +232,20 @@ class ConsumerList extends PureComponent {
   columns = [
     {
       title: '关联码',
-      dataIndex: 'cid',
+      dataIndex: 'contactId',
     },
     {
-      title: '客户名',
-      dataIndex: 'consumerName',
+      title: '联系人',
+      dataIndex: 'contactName',
     },
     {
-      title: '客户关键词',
-      dataIndex: 'description',
+      title: '联系人电话',
+      dataIndex: 'email',
+      sorter: true,
     },
     {
-      title: '网址',
-      dataIndex: 'website',
+      title: '部门',
+      dataIndex: 'department',
       sorter: true,
     },
     {
@@ -262,7 +263,7 @@ class ConsumerList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'consumer/customerList',
+      type: 'contacts/contactsList',
     });
   }
 
@@ -299,7 +300,7 @@ class ConsumerList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'consumer/customerList',
+      type: 'contacts/contactsList',
       payload: {},
     });
   };
@@ -360,8 +361,8 @@ class ConsumerList extends PureComponent {
       });
 
       dispatch({
-        type: 'consumer/customerList',
-        payload: values.consumerName,
+        type: 'contacts/contactsList',
+        payload: values.contactName,
       });
     });
   };
@@ -414,12 +415,12 @@ class ConsumerList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="客户名称">
-              {getFieldDecorator('consumerName')(<Input placeholder="请输入" />)}
+            <FormItem label="联系人姓名">
+              {getFieldDecorator('contactName')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="客户状态">
+            <FormItem label="联系人状态">
               {getFieldDecorator('isOfficial')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="0">潜在</Option>
@@ -453,7 +454,7 @@ class ConsumerList extends PureComponent {
 
   render() {
     const {
-      consumer: {data},
+      contacts: {data},
       loading,
     } = this.props;
     const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
@@ -473,7 +474,7 @@ class ConsumerList extends PureComponent {
       handleUpdate: this.handleUpdate,
     };
     return (
-      <PageHeaderWrapper title="客户表格">
+      <PageHeaderWrapper title="联系人表格">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>
@@ -517,4 +518,4 @@ class ConsumerList extends PureComponent {
   }
 }
 
-export default ConsumerList;
+export default ContactsList;
